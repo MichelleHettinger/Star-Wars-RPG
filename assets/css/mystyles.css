@@ -1,3 +1,34 @@
+.tempbox{
+	border: 2px solid black;
+}
 .box {
-	border: 2px black solid;
+	border: 2px green solid;
+	background-color: white;
+	margin: 0;
+}
+.box p{
+	text-align: center;
+	margin: 0;
+}
+img {
+	margin-top: 2px;
+	margin-bottom: 2px;
+	height: 110px;
+	width: 100%;
+}
+h1 {
+	text-align: right;
+}
+#becomeEnemy, #fightSection h3 {
+	text-align: center;
+
+}
+button {
+	margin-left: 45%;
+}
+.highlightEnemies {
+	background-color: red;
+}
+.highlightDefender {
+	background-color: black;
 }
