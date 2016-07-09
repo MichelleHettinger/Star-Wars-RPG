@@ -67,6 +67,42 @@ $(document).ready(function(){
 	    	charNum = 0;
 	    	console.log("You de-selected Obi-Wan: " + charNum);
 	    }
+
+	    //
+    	//If vader or maul is chosen first and obi second.	    
+	    if (charNum == 4 || charNum == 3){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(obi);
+	    	obi.removeClass("col-sm-4");
+	    	obi.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	luke.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	obi.removeClass("highlightEnemies");
+	    	obi.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }
+	    //Else if luke first and obi second
+	    else if (charNum == 2){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(obi);
+	    	obi.removeClass("col-sm-4");
+	    	obi.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	maul.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	obi.removeClass("highlightEnemies");
+	    	obi.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }
     })
     luke.on("click", function(){
     	if (charNum == 0){
@@ -117,6 +153,42 @@ $(document).ready(function(){
 	    	charNum = 0;
 	    	console.log("You de-selected Luke: " + charNum);
 	    }
+
+	    //
+    	//If vader or maul is chosen first and luke second.	    
+	    if (charNum == 4 || charNum == 3){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(luke);
+	    	luke.removeClass("col-sm-4");
+	    	luke.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	obi.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	obi.removeClass("highlightEnemies");
+	    	obi.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }
+	    //Else if obi was chosen second and luke second
+	    else if (charNum == 1){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(luke);
+	    	luke.removeClass("col-sm-4");
+	    	luke.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	maul.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	luke.removeClass("highlightEnemies");
+	    	luke.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }	       
     })
     maul.on("click", function(){
     	if (charNum == 0){
@@ -167,6 +239,42 @@ $(document).ready(function(){
 	    	charNum = 0;
 	    	console.log("You de-selected Maul: " + charNum);
 		}
+
+		//
+    	//If obi is chosen first and maul second.	    
+	    if (charNum == 1){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(maul);
+	    	maul.removeClass("col-sm-4");
+	    	maul.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	luke.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	maul.removeClass("highlightEnemies");
+	    	maul.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }
+	    //If luke or vader is chosen first and maul second
+	    else if (charNum == 2 || charNum == 4){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(maul);
+	    	maul.removeClass("col-sm-4");
+	    	maul.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	obi.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	maul.removeClass("highlightEnemies");
+	    	maul.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }	    	
     })
     vader.on("click", function(){
     	if (charNum == 0){
@@ -217,6 +325,59 @@ $(document).ready(function(){
 	    	charNum = 0;
 	    	console.log("You de-selected Vader: " + charNum);
 	    }
+
+	    //
+    	//If obi is chosen first and vader second.	    
+	    if (charNum == 1){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(vader);
+	    	vader.removeClass("col-sm-4");
+	    	vader.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	luke.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	vader.removeClass("highlightEnemies");
+	    	vader.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }
+	    //If luke is chosen first and vader second.
+	    else if (charNum == 2){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(vader);
+	    	vader.removeClass("col-sm-4");
+	    	vader.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	obi.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	vader.removeClass("highlightEnemies");
+	    	vader.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }	    
+	    //If luke is chosen first and vader second
+	    else if (charNum == 3){
+	    	//Put the character in the defender section and resize
+	    	yourDefender.append(vader);
+	    	vader.removeClass("col-sm-4");
+	    	vader.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	obi.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	vader.removeClass("highlightEnemies");
+	    	vader.addClass("highlightDefender");
+
+	    	//Make it so the attacker/defender is locked in
+	    	charNum = 5;
+	    }	        
     })
 	
 
