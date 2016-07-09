@@ -77,12 +77,12 @@ $(document).ready(function(){
 	    
     	//If vader or maul is chosen first and obi second...	    
 	    if (charNum == 4 || charNum == 3){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(obi);
+
+			//Resize by removing, then adding css classes
 	    	obi.removeClass("col-sm-4");
 	    	obi.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	luke.addClass("firstMargin");
 
 	    	//Change color of defender
@@ -94,12 +94,12 @@ $(document).ready(function(){
 	    }
 	    //Else if luke first and obi second...
 	    else if (charNum == 2){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(obi);
+
+	    	//Resize by removing, then adding css classes
 	    	obi.removeClass("col-sm-4");
 	    	obi.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	maul.addClass("firstMargin");
 
 	    	//Change color of defender
@@ -170,29 +170,29 @@ $(document).ready(function(){
 
     	//If vader or maul is chosen first and luke second...	    
 	    if (charNum == 4 || charNum == 3){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(luke);
+
+	    	//Resize by removing, then adding css classes
 	    	luke.removeClass("col-sm-4");
 	    	luke.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	obi.addClass("firstMargin");
 
 	    	//Change color of defender
-	    	obi.removeClass("highlightEnemies");
-	    	obi.addClass("highlightDefender");
+	    	luke.removeClass("highlightEnemies");
+	    	luke.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
 	    	charNum = 5;
 	    }
 	    //Else if obi was chosen second and luke second...
 	    else if (charNum == 1){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(luke);
+
+	    	//Resize by removing, then adding css classes
 	    	luke.removeClass("col-sm-4");
 	    	luke.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	maul.addClass("firstMargin");
 
 	    	//Change color of defender
@@ -263,12 +263,12 @@ $(document).ready(function(){
 
     	//If obi is chosen first and maul second.	    
 	    if (charNum == 1){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(maul);
+
+			//Resize by removing, then adding css classes
 	    	maul.removeClass("col-sm-4");
 	    	maul.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	luke.addClass("firstMargin");
 
 	    	//Change color of defender
@@ -280,8 +280,10 @@ $(document).ready(function(){
 	    }
 	    //If luke or vader is chosen first and maul second
 	    else if (charNum == 2 || charNum == 4){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(maul);
+
+			//Resize by removing, then adding css classes
 	    	maul.removeClass("col-sm-4");
 	    	maul.addClass("col-sm-12");
 
@@ -357,13 +359,12 @@ $(document).ready(function(){
 	    
     	//If obi is chosen first and vader second...	    
 	    if (charNum == 1){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(vader);
-	    	//Resize by removing, then adding
+
+	    	//Resize by removing, then adding css classes
 	    	vader.removeClass("col-sm-4");
 	    	vader.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	luke.addClass("firstMargin");
 
 	    	//Change color of defender
@@ -375,12 +376,12 @@ $(document).ready(function(){
 	    }
 	    //If luke is chosen first and vader second...
 	    else if (charNum == 2){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(vader);
+
+	    	//Resize by removing, then adding css classes
 	    	vader.removeClass("col-sm-4");
 	    	vader.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	obi.addClass("firstMargin");
 
 	    	//Change color of defender
@@ -392,12 +393,12 @@ $(document).ready(function(){
 	    }	    
 	    //If maul is chosen first and vader second...
 	    else if (charNum == 3){
-	    	//Put the character in the defender section and resize
+	    	//Put the character in the defender section
 	    	yourDefender.append(vader);
+
+	    	//Resize by removing, then adding css classes
 	    	vader.removeClass("col-sm-4");
 	    	vader.addClass("col-sm-12");
-
-	    	//Resize the enemies div
 	    	obi.addClass("firstMargin");
 
 	    	//Change color of defender
