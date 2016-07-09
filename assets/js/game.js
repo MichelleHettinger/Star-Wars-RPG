@@ -1,5 +1,7 @@
 //When the document is ready, perform this function.
 $(document).ready(function(){
+	var attack = $("#attackButton");
+
 	var obi = $("#movableObi");
 	var luke = $("#movableLuke");
 	var maul = $("#movableMaul");
@@ -12,6 +14,61 @@ $(document).ready(function(){
 	var fightSection = $("#fightSection");
 
 	var charNum = 0;
+
+	var obiWan = {
+		attackPower:5,
+		health:180,
+		attackDefend:-1
+	};
+	var lukeSkywalker = {
+		attackPower:6,
+		health:15,
+		attackDefend:-1
+	};
+	var darthMaul = {
+		attackPower:7,
+		health:140,
+		attackDefend:-1
+	};
+	var darthVader = {
+		attackPower:7,
+		health:170,
+		attackDefend:-1
+	};
+
+
+
+	attack.on("click", function(){
+
+		
+
+		if (obiWan.attackDefend == 1){
+			obiWan.attackPower +=5;
+
+
+		}
+		else if (lukeSkywalker.attackDefend == 1){
+			lukeSkywalker.attackPower +=6;
+
+
+		}
+		else if (darthMaul.attackDefend == 1){
+			lukeSkywalker.attackPower +=7;
+
+
+		}
+		else if (darthVader.attackDefend == 1){
+			darthVader.attackPower +=7;
+
+		}
+
+
+
+
+
+
+	})
+
 
 	//Select the character and it gets pulled to the left. All other characters pulled to the right.
 	//Also, once a character has been selected, the others cannot be selected anymore.
@@ -42,6 +99,7 @@ $(document).ready(function(){
 
 	    	//charNum is changed to 1, which is a value that will later signify having selected obi-wan 
 	    	charNum = 1;
+	    	obiWan.attackDefend = 1;
 	    	console.log("You selected Obi-Wan: " + charNum);
 	    }
 	    //After the first click on vader, charNum is 1. Therfore, the next time vader is clicked this else if will run.
@@ -69,6 +127,7 @@ $(document).ready(function(){
 
 			//charNum is changed to 0, which is a value that will later signify having de-selected obi-wan 
 	    	charNum = 0;
+	    	obiWan.attackDefend = -1;
 	    	console.log("You de-selected Obi-Wan: " + charNum);
 	    }
 
@@ -91,6 +150,7 @@ $(document).ready(function(){
 
 	    	//Make it so the attacker/defender is locked in
 	    	charNum = 5;
+	    	obiWan.attackDefend = 0;
 	    }
 	    //Else if luke first and obi second...
 	    else if (charNum == 2){
@@ -108,6 +168,7 @@ $(document).ready(function(){
 
 	    	//Make it so the attacker/defender is locked in
 	    	charNum = 5;
+	    	obiWan.attackDefend = 0;
 	    }
     })
     luke.on("click", function(){
@@ -135,6 +196,7 @@ $(document).ready(function(){
 
 			//charNum is changed to 2, which is a value that will later signify having selected luke skywalker. 
 	    	charNum = 2;
+	    	lukeSkywalker.attackDefend = 1;
 	    	console.log("You selected Luke: " + charNum);
 	    }
 	    //After the first click on luke skywalker, charNum is 2. Therfore, the next time vader is clicked this else if will run.
@@ -162,6 +224,7 @@ $(document).ready(function(){
 
 			//charNum is changed to 0, which is a value that will later signify having selected luke skywalker.
 	    	charNum = 0;
+	    	lukeSkywalker.attackDefend = -1;
 	    	console.log("You de-selected Luke: " + charNum);
 	    }
 
@@ -183,6 +246,7 @@ $(document).ready(function(){
 	    	luke.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	lukeSkywalker.attackDefend = 0;
 	    	charNum = 5;
 	    }
 	    //Else if obi was chosen second and luke second...
@@ -200,6 +264,7 @@ $(document).ready(function(){
 	    	luke.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	lukeSkywalker.attackDefend = 0;
 	    	charNum = 5;
 	    }	       
     })
@@ -228,6 +293,7 @@ $(document).ready(function(){
 
 			//charNum is changed to 3, which is a value that will later signify having selected darth maul.
 	    	charNum = 3;
+	    	darthMaul.attackDefend = 1;
 	    	console.log("You selected Maul: " + charNum);
 		}
 	    //After the first click on darth maul, charNum is 3. Therfore, the next time vader is clicked this else if will run.
@@ -255,6 +321,7 @@ $(document).ready(function(){
 
 	    	//charNum is changed to 0, which is a value that will later signify having de-selected darth maul
 	    	charNum = 0;
+	    	darthMaul.attackDefend = -1;
 	    	console.log("You de-selected Maul: " + charNum);
 		}
 
@@ -276,6 +343,7 @@ $(document).ready(function(){
 	    	maul.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	darthMaul.attackDefend = 0;
 	    	charNum = 5;
 	    }
 	    //If luke or vader is chosen first and maul second
@@ -295,6 +363,7 @@ $(document).ready(function(){
 	    	maul.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	darthMaul.attackDefend = 0;
 	    	charNum = 5;
 	    }	    	
     })
@@ -324,6 +393,7 @@ $(document).ready(function(){
 
 			//charNum is changed to 4, which is a value that will later signify having selected darth vader
 	    	charNum = 4;
+	    	darthVader.attackDefend = 1;
 	    	console.log("You selected Vader: " + charNum);	
 	    }
 	    //After the first click on vader, charNum is 4. Therfore, the next time vader is clicked this else if will run.
@@ -351,6 +421,7 @@ $(document).ready(function(){
 
 			//charNum is changed to 0, which is a value that will later signify having de-selected darth vader
 	    	charNum = 0;
+	    	darthVader.attackDefend = -1;
 	    	console.log("You de-selected Vader: " + charNum);
 	    }
 
@@ -372,6 +443,7 @@ $(document).ready(function(){
 	    	vader.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	darthVader.attackDefend = 0;
 	    	charNum = 5;
 	    }
 	    //If luke is chosen first and vader second...
@@ -406,10 +478,15 @@ $(document).ready(function(){
 	    	vader.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	darthVader.attackDefend = 0;
 	    	charNum = 5;
 	    }	        
     })
 	
+
+
+
+
 
 
 
