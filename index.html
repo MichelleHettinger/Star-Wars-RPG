@@ -24,7 +24,7 @@
 				<h1>Star Wars RPG</h1>
 			</div>
 			<!-- Character images -->
-			<div class="row">
+			<div class="row" id="charSelectDiv">
 				<div class="col-sm-2 box" id="movableObi">
 					<p>Obi-Wan Kenobi</p>
 					<img alt="ObiWan" src="assets/images/obi.jpg" />
@@ -49,8 +49,11 @@
 
 			<!-- Character selection row -->
 			<div class="row">
-				<div class="col-sm-6 tempbox" id="charSlot">
+				<div class="col-sm-3 tempbox" id="charSlot">
 					<h3>Your Character</h3>
+				</div>
+				<div class="col-sm-3 tempbox" id="defenderSlot">
+					<h3>Defender</h3>
 				</div>
 				<div class="col-sm-6 tempbox" id="becomeEnemy">	
 					<h3>Enemies available to attack</h3>
@@ -58,12 +61,9 @@
 			</div>
 
 			<div class="row">
-				<div class="col-sm-6 pull-right tempbox" id="fightSection">
+				<div class="col-sm-6 col-sm-offset-3 tempbox" id="fightSection">
 					<h3>Battle Arena</h3>
 					<button type="button">Attack</button>
-				</div>
-				<div class="col-sm-6 tempbox" id="becomeDefender">
-					<h3>Defender</h3>
 				</div>
 			</div>
 
