@@ -1,14 +1,32 @@
-.tempbox{
-	border: 2px solid black;
+#movableLuke {
+	border: 2px green solid;
+}
+#movableVader {
+	border: 2px black solid;
+}
+#movableMaul {
+	border: 2px red solid;
+}
+#movableObi {
+	border: 2px blue solid;
 }
 .box {
-	border: 2px green solid;
 	background-color: white;
 	margin: 0;
 }
-.box p{
+#attackButton {
+	margin-bottom: 10px;
+}
+.tempbox{
+	border: 2px solid black;
+}
+.box, p{
 	text-align: center;
 	margin: 0;
+}
+p {
+	text-align: center;
+	font-weight: bold;
 }
 img {
 	margin-top: 2px;

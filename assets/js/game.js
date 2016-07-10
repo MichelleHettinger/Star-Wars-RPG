@@ -16,24 +16,28 @@ $(document).ready(function(){
 	var charNum = 0;
 
 	var obiWan = {
+		name: "Obi-Wan",
 		baseAttackPower:5,
 		currentAttackPower:5,
 		health:180,
 		attackDefend:-1
 	};
 	var lukeSkywalker = {
+		name: "Luke Skywalker",
 		baseAttackPower:6,
 		currentAttackPower:6,
 		health:150,
 		attackDefend:-1
 	};
 	var darthMaul = {
+		name: "Darth Maul",
 		baseAttackPower:7,
 		currentAttackPower:7,
 		health:140,
 		attackDefend:-1
 	};
 	var darthVader = {
+		name: "Darth Vader",
 		baseAttackPower:7,
 		currentAttackPower:7,
 		health:170,
@@ -83,6 +87,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#obiHealth").html(obiWan.health);
 			$("#maulHealth").html(darthMaul.health);
+
+			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + obiWan.currentAttackPower + " damage.");
+			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + darthMaul.baseAttackPower + " damage.");
 		}
 		//Obi attacking luke skywalker
 		else if (lukeSkywalker.attackDefend == 0){
