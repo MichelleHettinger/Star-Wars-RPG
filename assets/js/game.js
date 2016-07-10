@@ -103,6 +103,11 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#obiHealth").html(obiWan.health);
 			$("#lukeHealth").html(lukeSkywalker.health);
+
+			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + obiWan.currentAttackPower + " damage.");
+			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");
+
+
 		}
 		//Obi attacking darth vader
 		else if (darthVader.attackDefend == 0){
@@ -117,9 +122,9 @@ $(document).ready(function(){
 			$("#obiHealth").html(obiWan.health);
 			$("#vaderHealth").html(darthVader.health);
 
-		}
-		else {
-			console.log("nothing");
+			$("#emptyAttack").html("You attacked " + darthVader.name + " for " + obiWan.currentAttackPower + " damage.");
+			$("#emptyDefend").html(darthVader.name + " counter attacked for " + darthVader.baseAttackPower + " damage.");
+
 		}
 	}
 	function lukeAttacks(){
@@ -135,6 +140,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#lukeHealth").html(lukeSkywalker.health);
 			$("#maulHealth").html(darthMaul.health);
+
+			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + lukeSkywalker.currentAttackPower + " damage.");
+			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + darthMaul.baseAttackPower + " damage.");			
 		}
 		//Luke skywalker attacking obi-wan
 		else if (obiWan.attackDefend == 0){
@@ -148,6 +156,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#lukeHealth").html(lukeSkywalker.health);
 			$("#obiHealth").html(obiWan.health);
+
+			$("#emptyAttack").html("You attacked " + obiWan.name + " for " + lukeSkywalker.currentAttackPower + " damage.");
+			$("#emptyDefend").html(obiWan.name + " counter attacked for " + obiWan.baseAttackPower + " damage.");			
 		}
 		//Luke skywalker attacking darth vader
 		else if (darthVader.attackDefend == 0){
@@ -161,6 +172,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#lukeHealth").html(lukeSkywalker.health);
 			$("#vaderHealth").html(darthVader.health);
+
+			$("#emptyAttack").html("You attacked " + darthVader.name + " for " + lukeSkywalker.currentAttackPower + " damage.");
+			$("#emptyDefend").html(darthVader.name + " counter attacked for " + darthVader.baseAttackPower + " damage.");
 		}
 	}
 	function maulAttacks(){
@@ -176,6 +190,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#maulHealth").html(darthMaul.health);
 			$("#lukeHealth").html(lukeSkywalker.health);
+
+			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + darthMaul.currentAttackPower + " damage.");
+			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");
 		}
 		//Darth maul attacking obi-wan
 		else if (obiWan.attackDefend == 0){
@@ -202,6 +219,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#maulHealth").html(darthMaul.health);
 			$("#vaderHealth").html(darthVader.health);
+
+			$("#emptyAttack").html("You attacked " + darthVader.name + " for " + darthMaul.currentAttackPower + " damage.");
+			$("#emptyDefend").html(darthVader.name + " counter attacked for " + darthVader.baseAttackPower + " damage.");
 		}
 	}
 	function vaderAttacks(){
@@ -217,6 +237,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#vaderHealth").html(darthVader.health);
 			$("#lukeHealth").html(lukeSkywalker.health);
+
+			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + darthVader.currentAttackPower + " damage.");
+			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");			
 		}
 		//Darth vader attacking obi-wan
 		else if (obiWan.attackDefend == 0){
@@ -243,6 +266,9 @@ $(document).ready(function(){
 			//Change the html text to reflect the changes in health
 			$("#vaderHealth").html(darthVader.health);
 			$("#maulHealth").html(darthMaul.health);
+
+			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + darthVader.currentAttackPower + " damage.");
+			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + darthMaul.baseAttackPower + " damage.");
 		}
 	}
 
