@@ -1,4 +1,4 @@
-//When the document is ready, perform this function.
+//When the html is fully loaded...
 $(document).ready(function(){
 	var attack = $("#attackButton");
 
@@ -16,58 +16,234 @@ $(document).ready(function(){
 	var charNum = 0;
 
 	var obiWan = {
-		attackPower:5,
+		baseAttackPower:5,
+		currentAttackPower:5,
 		health:180,
 		attackDefend:-1
 	};
 	var lukeSkywalker = {
-		attackPower:6,
-		health:15,
+		baseAttackPower:6,
+		currentAttackPower:6,
+		health:150,
 		attackDefend:-1
 	};
 	var darthMaul = {
-		attackPower:7,
+		baseAttackPower:7,
+		currentAttackPower:7,
 		health:140,
 		attackDefend:-1
 	};
 	var darthVader = {
-		attackPower:7,
+		baseAttackPower:7,
+		currentAttackPower:7,
 		health:170,
 		attackDefend:-1
 	};
 
 
 
+
+
 	attack.on("click", function(){
-
-		
-
+		//If obiWan is the attacker
 		if (obiWan.attackDefend == 1){
-			obiWan.attackPower +=5;
-
-
+			obiAttacks();
 		}
+		//If luke skywalker is the attacker
 		else if (lukeSkywalker.attackDefend == 1){
-			lukeSkywalker.attackPower +=6;
-
-
+			lukeAttacks();
 		}
+		//If darth maul is the attacker
 		else if (darthMaul.attackDefend == 1){
-			lukeSkywalker.attackPower +=7;
-
-
+			maulAttacks();
 		}
+		//If darth vader is the attacker
 		else if (darthVader.attackDefend == 1){
-			darthVader.attackPower +=7;
+			vaderAttacks();
+		}
+		else {
+			alert("Get started!");
+		}
+	})
+
+
+
+
+
+	function obiAttacks(){
+		//Obi attacking darth maul
+		if (darthMaul.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			obiWan.health -= darthMaul.baseAttackPower;
+			darthMaul.health -= obiWan.currentAttackPower;
+			obiWan.currentAttackPower += obiWan.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#obiHealth").html(obiWan.health);
+			$("#maulHealth").html(darthMaul.health);
+		}
+		//Obi attacking luke skywalker
+		else if (lukeSkywalker.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			obiWan.health -= lukeSkywalker.baseAttackPower;
+			lukeSkywalker.health -= obiWan.currentAttackPower;
+			obiWan.currentAttackPower += obiWan.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#obiHealth").html(obiWan.health);
+			$("#lukeHealth").html(lukeSkywalker.health);
+		}
+		//Obi attacking darth vader
+		else if (darthVader.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			obiWan.health -= darthVader.baseAttackPower;
+			darthVader.health -= obiWan.currentAttackPower;
+			obiWan.currentAttackPower += obiWan.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#obiHealth").html(obiWan.health);
+			$("#vaderHealth").html(darthVader.health);
 
 		}
+		else {
+			console.log("nothing");
+		}
+	}
+	function lukeAttacks(){
+		//Luke skywalker attacking darth maul
+		if (darthMaul.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			lukeSkywalker.health -= darthMaul.baseAttackPower;
+			darthMaul.health -= lukeSkywalker.currentAttackPower;
+			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#lukeHealth").html(lukeSkywalker.health);
+			$("#maulHealth").html(darthMaul.health);
+		}
+		//Luke skywalker attacking obi-wan
+		else if (obiWan.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			lukeSkywalker.health -= obiWan.baseAttackPower;
+			obiWan.health -= lukeSkywalker.currentAttackPower;
+			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#lukeHealth").html(lukeSkywalker.health);
+			$("#obiHealth").html(obiWan.health);
+		}
+		//Luke skywalker attacking darth vader
+		else if (darthVader.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			lukeSkywalker.health -= darthVader.baseAttackPower;
+			darthVader.health -= lukeSkywalker.currentAttackPower;
+			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#lukeHealth").html(lukeSkywalker.health);
+			$("#vaderHealth").html(darthVader.health);
+		}
+	}
+	function maulAttacks(){
+		//Darth maul attacking luke skywalker
+		if (lukeSkywalker.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			darthMaul.health -= lukeSkywalker.baseAttackPower;
+			lukeSkywalker.health -= darthMaul.currentAttackPower;
+			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#maulHealth").html(darthMaul.health);
+			$("#lukeHealth").html(lukeSkywalker.health);
+		}
+		//Darth maul attacking obi-wan
+		else if (obiWan.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			darthMaul.health -= obiWan.baseAttackPower;
+			obiWan.health -= darthMaul.currentAttackPower;
+			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#maulHealth").html(darthMaul.health);
+			$("#obiHealth").html(obiWan.health);
+		}
+		//Darth maul attacking darth vader
+		else if (darthVader.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			darthMaul.health -= darthVader.baseAttackPower;
+			darthVader.health -= darthMaul.currentAttackPower;
+			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#maulHealth").html(darthMaul.health);
+			$("#vaderHealth").html(darthVader.health);
+		}
+	}
+	function vaderAttacks(){
+		//Darth vader attacking luke skywalker
+		if (lukeSkywalker.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			darthVader.health -= lukeSkywalker.baseAttackPower;
+			lukeSkywalker.health -= darthVader.currentAttackPower;
+			darthVader.currentAttackPower += darthVader.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#vaderHealth").html(darthVader.health);
+			$("#lukeHealth").html(lukeSkywalker.health);
+		}
+		//Darth vader attacking obi-wan
+		else if (obiWan.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			darthVader.health -= obiWan.baseAttackPower;
+			obiWan.health -= darthVader.currentAttackPower;
+			darthVader.currentAttackPower += darthVader.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#vaderHealth").html(darthVader.health);
+			$("#obiHealth").html(obiWan.health);
+		}
+		//Darth vader attacking darth maul
+		else if (darthMaul.attackDefend == 0){
+			//Attackers health can only decrease by the defender's base attack power.
+			//Defenders health will decrease by currentAttackPower
+			//Increase attackers current power by their (the attackers) base power
+			darthVader.health -= darthMaul.baseAttackPower;
+			darthMaul.health -= darthVader.currentAttackPower;
+			darthVader.currentAttackPower += darthVader.baseAttackPower;
+
+			//Change the html text to reflect the changes in health
+			$("#vaderHealth").html(darthVader.health);
+			$("#maulHealth").html(darthMaul.health);
+		}
+	}
 
 
 
 
 
 
-	})
 
 
 	//Select the character and it gets pulled to the left. All other characters pulled to the right.
@@ -461,6 +637,7 @@ $(document).ready(function(){
 	    	vader.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
+	    	darthVader.attackDefend = 0;
 	    	charNum = 5;
 	    }	    
 	    //If maul is chosen first and vader second...
@@ -482,14 +659,10 @@ $(document).ready(function(){
 	    	charNum = 5;
 	    }	        
     })
-	
-
-
-
-
 
 
 
 
 
 })
+
