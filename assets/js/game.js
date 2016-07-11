@@ -68,17 +68,41 @@ $(document).ready(function(){
 	var attackerHealthBar;
 	var defenderHealthBar;
 
+	var attackerDiv;
+	var defenderDiv;
+
+
 
 	attack.on("click", function(){
-		if (charNum > 4) {
+		if (charNum > 4 && charNum != 6) {
 			clickBattle(currentAttacker, attackerHealthBar, currentDefender, defenderHealthBar);
 		}
 	})
 
 
 
+	function checkHealth(attacker, defender){
+		if (defender.health == 0){
+			//remove the div
+			defenderDiv.remove();
 
 
+			console.log("You win");
+			//make the click attack do nothing when clicked
+			charNum = 6;
+		}
+		if (attack.health == 0){
+			//remove the div
+			attackerDiv.remove();
+
+			console.log("You lose");
+			//you lose
+			charNum = 6;
+		}
+	}
+
+
+	//This function executes when attack button is clicked on AND when charNum > 4 (indicating 2 fighters are locked into battle).
 	function clickBattle(attacker, attackerHB, defender, defenderHB){
 
 		//Attackers health can only decrease by the defender's base attack power.
@@ -108,10 +132,12 @@ $(document).ready(function(){
 		$("#emptyAttack").html("You attacked " + defender.name + " for " + attacker.currentAttackPower + " damage.");
 		$("#emptyDefend").html(defender.name + " counter attacked for " + defender.baseAttackPower + " damage.");
 
+		checkHealth(attacker, defender);
+		
 	}
 
 
-
+	//This function execute when the user selects their character and then a second character. It also makes it so no character's divs can be clicked on.
 	function lockChars(attacker, defender){
 		//Fill in the empty objects with the values for the attacker
 		currentAttacker.name = attacker.name;
@@ -217,10 +243,16 @@ $(document).ready(function(){
 	    	obi.removeClass("highlightEnemies");
 	    	obi.addClass("highlightDefender");
 
-	    	//Make it so the attacker/defender is locked in
-	    	lockChars(darthVader, obiWan);
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = vaderHealthBar;
 	    	defenderHealthBar = obiHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = vader;
+	    	defenderDiv = obi;
+
+	    	//Make it so the attacker/defender is locked in
+	    	lockChars(darthVader, obiWan);	    	
 	    }
     	//If maul is chosen first and obi second...	    
 	    else if (charNum == 3){
@@ -239,6 +271,10 @@ $(document).ready(function(){
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = maulHealthBar;
 	    	defenderHealthBar = obiHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = maul;
+	    	defenderDiv = obi;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(darthMaul, obiWan);	  
@@ -260,6 +296,10 @@ $(document).ready(function(){
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = lukeHealthBar;
 	    	defenderHealthBar = obiHealthBar;	
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = luke;
+	    	defenderDiv = obi;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(lukeSkywalker, obiWan);    	
@@ -341,13 +381,17 @@ $(document).ready(function(){
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = vaderHealthBar;
-	    	defenderHealthBar = lukeHealthBar;	
+	    	defenderHealthBar = lukeHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = vader;
+	    	defenderDiv = luke;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(darthVader, lukeSkywalker);
 	    }
     	//If maul is chosen first and luke second...	    
-	    if (charNum == 3){
+	    else if (charNum == 3){
 	    	//Put the character in the defender section
 	    	yourDefender.append(luke);
 
@@ -363,6 +407,10 @@ $(document).ready(function(){
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = maulHealthBar;
 	    	defenderHealthBar = lukeHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = maul;
+	    	defenderDiv = luke;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(darthMaul, lukeSkywalker);
@@ -383,7 +431,11 @@ $(document).ready(function(){
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = obiHealthBar;
-	    	defenderHealthBar = lukeHealthBar;	
+	    	defenderHealthBar = lukeHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = obi;
+	    	defenderDiv = luke;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(obiWan, lukeSkywalker);
@@ -466,7 +518,11 @@ $(document).ready(function(){
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = obiHealthBar;
-	    	defenderHealthBar = maulHealthBar;	
+	    	defenderHealthBar = maulHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = obi;
+	    	defenderDiv = maul;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(obiWan, darthMaul);	    	
@@ -489,7 +545,11 @@ $(document).ready(function(){
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = vaderHealthBar;
-	    	defenderHealthBar = maulHealthBar;	
+	    	defenderHealthBar = maulHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = vader;
+	    	defenderDiv = maul;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(darthVader, darthMaul);	
@@ -513,6 +573,10 @@ $(document).ready(function(){
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = lukeHealthBar;
 	    	defenderHealthBar = maulHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = luke;
+	    	defenderDiv = maul;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(lukeSkywalker, darthMaul);	
@@ -595,7 +659,11 @@ $(document).ready(function(){
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = obiHealthBar;
-	    	defenderHealthBar = vaderHealthBar;	
+	    	defenderHealthBar = vaderHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = obi;
+	    	defenderDiv = vader;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(obiWan, darthVader);	    	
@@ -618,6 +686,10 @@ $(document).ready(function(){
 	    	attackerHealthBar = lukeHealthBar;
 	    	defenderHealthBar = vaderHealthBar;	
 
+	    	//Current attacker and defender divs
+	    	attackerDiv = luke;
+	    	defenderDiv = vader;
+
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(lukeSkywalker, darthVader);
 	    }	    
@@ -637,7 +709,11 @@ $(document).ready(function(){
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = maulHealthBar;
-	    	defenderHealthBar = vaderHealthBar;	
+	    	defenderHealthBar = vaderHealthBar;
+
+	    	//Current attacker and defender divs
+	    	attackerDiv = maul;
+	    	defenderDiv = vader;
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(darthMaul, darthVader);    	
