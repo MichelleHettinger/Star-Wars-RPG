@@ -7,6 +7,11 @@ $(document).ready(function(){
 	var maul = $("#movableMaul");
 	var vader = $("#movableVader");
 
+	var obiHealthBar = $("#obiHealth");
+	var lukeHealthBar = $("#lukeHealth");
+	var vaderHealthBar = $("#vaderHealth");
+	var maulHealthBar = $("#maulHealth");
+
 	var charSelect = $("#charSelectDiv");
 	var yourFighter = $("#charSlot");
 	var yourEnemies = $("#becomeEnemy")
@@ -44,29 +49,29 @@ $(document).ready(function(){
 		attackDefend:-1
 	};
 
+	var currentAttacker = {
+		name: " ",
+		baseAttackPower: 0,
+		currentAttackPower: 0,
+		health: 0,
+		attackDefend: 20
+	}
 
+	var currentDefender = {
+		name: " ",
+		baseAttackPower: 0,
+		currentAttackPower: 0,
+		health: 0,
+		attackDefend: 20
+	}
 
+	var attackerHealthBar;
+	var defenderHealthBar;
 
 
 	attack.on("click", function(){
-		//If obiWan is the attacker
-		if (obiWan.attackDefend == 1){
-			obiAttacks();
-		}
-		//If luke skywalker is the attacker
-		else if (lukeSkywalker.attackDefend == 1){
-			lukeAttacks();
-		}
-		//If darth maul is the attacker
-		else if (darthMaul.attackDefend == 1){
-			maulAttacks();
-		}
-		//If darth vader is the attacker
-		else if (darthVader.attackDefend == 1){
-			vaderAttacks();
-		}
-		else {
-			alert("Get started!");
+		if (charNum > 4) {
+			clickBattle(currentAttacker, attackerHealthBar, currentDefender, defenderHealthBar);
 		}
 	})
 
@@ -74,351 +79,63 @@ $(document).ready(function(){
 
 
 
-	function obiAttacks(){
-		//Obi attacking darth maul
-		if (darthMaul.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			obiWan.health -= darthMaul.baseAttackPower;
-			darthMaul.health -= obiWan.currentAttackPower;
-			obiWan.currentAttackPower += obiWan.baseAttackPower;
+	function clickBattle(attacker, attackerHB, defender, defenderHB){
 
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (darthMaul.health <= 0){
-				darthMaul.health = 0;
+		//Attackers health can only decrease by the defender's base attack power.
+		//Defenders health will decrease by currentAttackPower
+		//Increase attackers current power by their (the attackers) base power
+		attacker.health -= defender.baseAttackPower;
+		defender.health -= attacker.currentAttackPower;
+		attacker.currentAttackPower += attacker.baseAttackPower;
 
-				//Attack/defend value of 2 signifies a death.
-				darthMaul.attackDefend = 2;
-			}
-			if (obiWan.health <= 0){
-				obiWan.health = 0;
-			}
+		//If either attacker or defender's health falls below zero, make it zero.
+		if (defender.health <= 0){
+			defender.health = 0;
 
-			//Change the html text to reflect the changes in health
-			$("#obiHealth").html(obiWan.health);
-			$("#maulHealth").html(darthMaul.health);
-
-			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + obiWan.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + darthMaul.baseAttackPower + " damage.");
+			//Attack/defend value of 2 signifies a death.
+			defender.attackDefend = 2;
 		}
-		//Obi attacking luke skywalker
-		else if (lukeSkywalker.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			obiWan.health -= lukeSkywalker.baseAttackPower;
-			lukeSkywalker.health -= obiWan.currentAttackPower;
-			obiWan.currentAttackPower += obiWan.baseAttackPower;
+		if (attacker.health <= 0){
+			attacker.health = 0;
 
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (lukeSkywalker.health <= 0){
-				lukeSkywalker.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				lukeSkywalker.attackDefend = 2;
-			}
-			if (obiWan.health <= 0){
-				obiWan.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#obiHealth").html(obiWan.health);
-			$("#lukeHealth").html(lukeSkywalker.health);
-
-			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + obiWan.currentAttackPower + " damage.");
-			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");
-
-
-		}
-		//Obi attacking darth vader
-		else if (darthVader.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			obiWan.health -= darthVader.baseAttackPower;
-			darthVader.health -= obiWan.currentAttackPower;
-			obiWan.currentAttackPower += obiWan.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (darthVader.health <= 0){
-				darthVader.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				darthVader.attackDefend = 2;
-			}
-			if (obiWan.health <= 0){
-				obiWan.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#obiHealth").html(obiWan.health);
-			$("#vaderHealth").html(darthVader.health);
-
-			$("#emptyAttack").html("You attacked " + darthVader.name + " for " + obiWan.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthVader.name + " counter attacked for " + darthVader.baseAttackPower + " damage.");
-
-		}
-	}
-	function lukeAttacks(){
-		//Luke skywalker attacking darth maul
-		if (darthMaul.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			lukeSkywalker.health -= darthMaul.baseAttackPower;
-			darthMaul.health -= lukeSkywalker.currentAttackPower;
-			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (darthMaul.health <= 0){
-				darthMaul.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				darthMaul.attackDefend = 2;
-			}
-			if (lukeSkywalker.health <= 0){
-				lukeSkywalker.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#lukeHealth").html(lukeSkywalker.health);
-			$("#maulHealth").html(darthMaul.health);
-
-			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + lukeSkywalker.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + darthMaul.baseAttackPower + " damage.");			
-		}
-		//Luke skywalker attacking obi-wan
-		else if (obiWan.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			lukeSkywalker.health -= obiWan.baseAttackPower;
-			obiWan.health -= lukeSkywalker.currentAttackPower;
-			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (obiWan.health <= 0){
-				obiWan.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				obiWan.attackDefend = 2;
-			}
-			if (lukeSkywalker.health <= 0){
-				lukeSkywalker.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#lukeHealth").html(lukeSkywalker.health);
-			$("#obiHealth").html(obiWan.health);
-
-			$("#emptyAttack").html("You attacked " + obiWan.name + " for " + lukeSkywalker.currentAttackPower + " damage.");
-			$("#emptyDefend").html(obiWan.name + " counter attacked for " + obiWan.baseAttackPower + " damage.");			
-		}
-		//Luke skywalker attacking darth vader
-		else if (darthVader.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			lukeSkywalker.health -= darthVader.baseAttackPower;
-			darthVader.health -= lukeSkywalker.currentAttackPower;
-			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (darthVader.health <= 0){
-				darthVader.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				darthVader.attackDefend = 2;
-			}
-			if (lukeSkywalker.health <= 0){
-				lukeSkywalker.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#lukeHealth").html(lukeSkywalker.health);
-			$("#vaderHealth").html(darthVader.health);
-
-			$("#emptyAttack").html("You attacked " + darthVader.name + " for " + lukeSkywalker.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthVader.name + " counter attacked for " + darthVader.baseAttackPower + " damage.");
-		}
-	}
-	function maulAttacks(){
-		//Darth maul attacking luke skywalker
-		if (lukeSkywalker.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			darthMaul.health -= lukeSkywalker.baseAttackPower;
-			lukeSkywalker.health -= darthMaul.currentAttackPower;
-			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (lukeSkywalker.health <= 0){
-				lukeSkywalker.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				lukeSkywalker.attackDefend = 2;
-			}
-			if (darthMaul.health <= 0){
-				darthMaul.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#maulHealth").html(darthMaul.health);
-			$("#lukeHealth").html(lukeSkywalker.health);
-
-			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + darthMaul.currentAttackPower + " damage.");
-			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");
-		}
-		//Darth maul attacking obi-wan
-		else if (obiWan.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			darthMaul.health -= obiWan.baseAttackPower;
-			obiWan.health -= darthMaul.currentAttackPower;
-			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (obiWan.health <= 0){
-				obiWan.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				obiWan.attackDefend = 2;
-			}
-			if (darthMaul.health <= 0){
-				darthMaul.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#maulHealth").html(darthMaul.health);
-			$("#obiHealth").html(obiWan.health);
-
-			$("#emptyAttack").html("You attacked " + obiWan.name + " for " + darthMaul.currentAttackPower + " damage.");
-			$("#emptyDefend").html(obiWan.name + " counter attacked for " + obiWan.baseAttackPower + " damage.");
-		}
-		//Darth maul attacking darth vader
-		else if (darthVader.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			darthMaul.health -= darthVader.baseAttackPower;
-			darthVader.health -= darthMaul.currentAttackPower;
-			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (darthVader.health <= 0){
-				darthVader.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				darthVader.attackDefend = 2;
-			}
-			if (darthMaul.health <= 0){
-				darthMaul.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#maulHealth").html(darthMaul.health);
-			$("#vaderHealth").html(darthVader.health);
-
-			$("#emptyAttack").html("You attacked " + darthVader.name + " for " + darthMaul.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthVader.name + " counter attacked for " + darthVader.baseAttackPower + " damage.");
-		}
-	}
-	function vaderAttacks(){
-		//Darth vader attacking luke skywalker
-		if (lukeSkywalker.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			darthVader.health -= lukeSkywalker.baseAttackPower;
-			lukeSkywalker.health -= darthVader.currentAttackPower;
-			darthVader.currentAttackPower += darthVader.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (lukeSkywalker.health <= 0){
-				lukeSkywalker.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				lukeSkywalker.attackDefend = 2;				
-			}
-			if (darthVader.health <= 0){
-				darthVader.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#vaderHealth").html(darthVader.health);
-			$("#lukeHealth").html(lukeSkywalker.health);
-
-			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + darthVader.currentAttackPower + " damage.");
-			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");	
-
+			attacker.attackDefend = 2;
 		}
 
+		//Change the html text to reflect the changes in health
+		attackerHB.html(attacker.health);
+		defenderHB.html(defender.health);
 
+		$("#emptyAttack").html("You attacked " + defender.name + " for " + attacker.currentAttackPower + " damage.");
+		$("#emptyDefend").html(defender.name + " counter attacked for " + defender.baseAttackPower + " damage.");
 
-		//Darth vader attacking obi-wan
-		else if (obiWan.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			darthVader.health -= obiWan.baseAttackPower;
-			obiWan.health -= darthVader.currentAttackPower;
-			darthVader.currentAttackPower += darthVader.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (obiWan.health <= 0){
-				obiWan.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				obiWan.attackDefend = 2;
-			}
-			if (darthVader.health <= 0){
-				darthVader.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#vaderHealth").html(darthVader.health);
-			$("#obiHealth").html(obiWan.health);
-
-
-			$("#emptyAttack").html("You attacked " + obiWan.name + " for " + darthVader.currentAttackPower + " damage.");
-			$("#emptyDefend").html(obiWan.name + " counter attacked for " + obiWan.baseAttackPower + " damage.");	
-		}
-		//Darth vader attacking darth maul
-		else if (darthMaul.attackDefend == 0){
-			//Attackers health can only decrease by the defender's base attack power.
-			//Defenders health will decrease by currentAttackPower
-			//Increase attackers current power by their (the attackers) base power
-			darthVader.health -= darthMaul.baseAttackPower;
-			darthMaul.health -= darthVader.currentAttackPower;
-			darthVader.currentAttackPower += darthVader.baseAttackPower;
-
-			//If either attacker or defender's health falls below zero, make it zero.
-			if (darthMaul.health <= 0){
-				darthMaul.health = 0;
-
-				//Attack/defend value of 2 signifies a death.
-				darthMaul.attackDefend = 2;
-			}
-			if (darthVader.health <= 0){
-				darthVader.health = 0;
-			}
-
-			//Change the html text to reflect the changes in health
-			$("#vaderHealth").html(darthVader.health);
-			$("#maulHealth").html(darthMaul.health);
-
-			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + darthVader.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + dart.baseAttackPower + " damage.");
-		}
 	}
 
 
 
+	function lockChars(attacker, defender){
+		//Fill in the empty objects with the values for the attacker
+		currentAttacker.name = attacker.name;
+		currentAttacker.health = attacker.health;
+		currentAttacker.baseAttackPower = attacker.baseAttackPower;
+		currentAttacker.currentAttackPower = attacker.currentAttackPower;
+		currentAttacker.attackDefend = attacker.attackDefend;
+		//Do the same for the defender
+		currentDefender.name = defender.name;
+		currentDefender.health = defender.health;
+		currentDefender.baseAttackPower = defender.baseAttackPower;
+		currentDefender.currentAttackPower = defender.currentAttackPower;
+		currentDefender.attackDefend = defender.attackDefend;
 
+		//With charNum set to 5, the character divs cannot be clicked on
+		charNum = 5;
 
+		//Signify that the defender is in the defensive state
+		//Before this lockChars function was run, the attackers attackDefend was set to 1, which was then brought into this function and assigned currentAttacker.attackDefend
+		currentDefender.attackDefend = 0;
+
+		console.log(currentAttacker.name + " vs. " + currentDefender.name);
+		console.log("Attacker status: " + currentAttacker.attackDefend + "\n" + "Defender status: " + currentDefender.attackDefend + "\n" + "charNum: " + charNum);
+	}
 
 
 
@@ -486,8 +203,8 @@ $(document).ready(function(){
 	    //The above if else-if acts as a toggle. When it is "toggled on", the user is able to enter the if else-if below.
 	    //The user must first choose their character and then they are able to choose their enemy.
 	    
-    	//If vader or maul is chosen first and obi second...	    
-	    if (charNum == 4 || charNum == 3){
+    	//If vader is chosen first and obi second...	    
+	    if (charNum == 4){
 	    	//Put the character in the defender section
 	    	yourDefender.append(obi);
 
@@ -501,9 +218,31 @@ $(document).ready(function(){
 	    	obi.addClass("highlightDefender");
 
 	    	//Make it so the attacker/defender is locked in
-	    	charNum = 5;
-	    	obiWan.attackDefend = 0;
+	    	lockChars(darthVader, obiWan);
+	    	attackerHealthBar = vaderHealthBar;
+	    	defenderHealthBar = obiHealthBar;
 	    }
+    	//If maul is chosen first and obi second...	    
+	    else if (charNum == 3){
+	    	//Put the character in the defender section
+	    	yourDefender.append(obi);
+
+			//Resize by removing, then adding css classes
+	    	obi.removeClass("col-sm-4");
+	    	obi.addClass("col-sm-12");
+	    	luke.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	obi.removeClass("highlightEnemies");
+	    	obi.addClass("highlightDefender");
+
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = maulHealthBar;
+	    	defenderHealthBar = obiHealthBar;
+
+	    	//Make it so the attacker/defender is locked in
+	    	lockChars(darthMaul, obiWan);	  
+	    }	    
 	    //Else if luke first and obi second...
 	    else if (charNum == 2){
 	    	//Put the character in the defender section
@@ -518,9 +257,12 @@ $(document).ready(function(){
 	    	obi.removeClass("highlightEnemies");
 	    	obi.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = lukeHealthBar;
+	    	defenderHealthBar = obiHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	charNum = 5;
-	    	obiWan.attackDefend = 0;
+	    	lockChars(lukeSkywalker, obiWan);    	
 	    }
     })
     luke.on("click", function(){
@@ -583,8 +325,8 @@ $(document).ready(function(){
 	    //The above if else-if acts as a toggle. When it is "toggled on", the user is able to enter the if else-if below.
 	    //The user must first choose their character and then they are able to choose their enemy.
 
-    	//If vader or maul is chosen first and luke second...	    
-	    if (charNum == 4 || charNum == 3){
+    	//If vader is chosen first and luke second...	    
+	    if (charNum == 4){
 	    	//Put the character in the defender section
 	    	yourDefender.append(luke);
 
@@ -597,10 +339,34 @@ $(document).ready(function(){
 	    	luke.removeClass("highlightEnemies");
 	    	luke.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = vaderHealthBar;
+	    	defenderHealthBar = lukeHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	lukeSkywalker.attackDefend = 0;
-	    	charNum = 5;
+	    	lockChars(darthVader, lukeSkywalker);
 	    }
+    	//If maul is chosen first and luke second...	    
+	    if (charNum == 3){
+	    	//Put the character in the defender section
+	    	yourDefender.append(luke);
+
+	    	//Resize by removing, then adding css classes
+	    	luke.removeClass("col-sm-4");
+	    	luke.addClass("col-sm-12");
+	    	obi.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	luke.removeClass("highlightEnemies");
+	    	luke.addClass("highlightDefender");
+
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = maulHealthBar;
+	    	defenderHealthBar = lukeHealthBar;
+
+	    	//Make it so the attacker/defender is locked in
+	    	lockChars(darthMaul, lukeSkywalker);
+	    }	    
 	    //Else if obi was chosen second and luke second...
 	    else if (charNum == 1){
 	    	//Put the character in the defender section
@@ -615,9 +381,12 @@ $(document).ready(function(){
 	    	luke.removeClass("highlightEnemies");
 	    	luke.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = obiHealthBar;
+	    	defenderHealthBar = lukeHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	lukeSkywalker.attackDefend = 0;
-	    	charNum = 5;
+	    	lockChars(obiWan, lukeSkywalker);
 	    }	       
     })
     maul.on("click", function(){
@@ -637,6 +406,7 @@ $(document).ready(function(){
 	    	obi.removeClass("col-sm-2");
 	    	luke.removeClass("col-sm-2");
 	    	vader.removeClass("col-sm-2");
+
 	    	//With bootstrap col classes removed, add them back, but change the size.
 	    	maul.addClass("col-sm-12");
 	    	obi.addClass("col-sm-4");
@@ -694,12 +464,15 @@ $(document).ready(function(){
 	    	maul.removeClass("highlightEnemies");
 	    	maul.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = obiHealthBar;
+	    	defenderHealthBar = maulHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	darthMaul.attackDefend = 0;
-	    	charNum = 5;
+	    	lockChars(obiWan, darthMaul);	    	
 	    }
-	    //If luke or vader is chosen first and maul second
-	    else if (charNum == 2 || charNum == 4){
+	    //If vader is chosen first and maul second
+	    else if (charNum == 4){
 	    	//Put the character in the defender section
 	    	yourDefender.append(maul);
 
@@ -714,10 +487,36 @@ $(document).ready(function(){
 	    	maul.removeClass("highlightEnemies");
 	    	maul.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = vaderHealthBar;
+	    	defenderHealthBar = maulHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	darthMaul.attackDefend = 0;
-	    	charNum = 5;
-	    }	    	
+	    	lockChars(darthVader, darthMaul);	
+	    }
+	    //If luke is chosen first and maul second
+	    else if (charNum == 2){
+	    	//Put the character in the defender section
+	    	yourDefender.append(maul);
+
+			//Resize by removing, then adding css classes
+	    	maul.removeClass("col-sm-4");
+	    	maul.addClass("col-sm-12");
+
+	    	//Resize the enemies div
+	    	obi.addClass("firstMargin");
+
+	    	//Change color of defender
+	    	maul.removeClass("highlightEnemies");
+	    	maul.addClass("highlightDefender");
+
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = lukeHealthBar;
+	    	defenderHealthBar = maulHealthBar;
+
+	    	//Make it so the attacker/defender is locked in
+	    	lockChars(lukeSkywalker, darthMaul);	
+	    }	 	    	    	
     })
     vader.on("click", function(){
 		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
@@ -794,9 +593,12 @@ $(document).ready(function(){
 	    	vader.removeClass("highlightEnemies");
 	    	vader.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = obiHealthBar;
+	    	defenderHealthBar = vaderHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	darthVader.attackDefend = 0;
-	    	charNum = 5;
+	    	lockChars(obiWan, darthVader);	    	
 	    }
 	    //If luke is chosen first and vader second...
 	    else if (charNum == 2){
@@ -812,9 +614,12 @@ $(document).ready(function(){
 	    	vader.removeClass("highlightEnemies");
 	    	vader.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = lukeHealthBar;
+	    	defenderHealthBar = vaderHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	darthVader.attackDefend = 0;
-	    	charNum = 5;
+	    	lockChars(lukeSkywalker, darthVader);
 	    }	    
 	    //If maul is chosen first and vader second...
 	    else if (charNum == 3){
@@ -830,9 +635,12 @@ $(document).ready(function(){
 	    	vader.removeClass("highlightEnemies");
 	    	vader.addClass("highlightDefender");
 
+	    	//Current attackers health bar to the <p></p> associated with the characters health.
+	    	attackerHealthBar = maulHealthBar;
+	    	defenderHealthBar = vaderHealthBar;	
+
 	    	//Make it so the attacker/defender is locked in
-	    	darthVader.attackDefend = 0;
-	    	charNum = 5;
+	    	lockChars(darthMaul, darthVader);    	
 	    }	        
     })
 
