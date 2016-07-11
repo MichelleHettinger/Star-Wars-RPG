@@ -84,6 +84,17 @@ $(document).ready(function(){
 			darthMaul.health -= obiWan.currentAttackPower;
 			obiWan.currentAttackPower += obiWan.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (darthMaul.health <= 0){
+				darthMaul.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				darthMaul.attackDefend = 2;
+			}
+			if (obiWan.health <= 0){
+				obiWan.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#obiHealth").html(obiWan.health);
 			$("#maulHealth").html(darthMaul.health);
@@ -99,6 +110,17 @@ $(document).ready(function(){
 			obiWan.health -= lukeSkywalker.baseAttackPower;
 			lukeSkywalker.health -= obiWan.currentAttackPower;
 			obiWan.currentAttackPower += obiWan.baseAttackPower;
+
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (lukeSkywalker.health <= 0){
+				lukeSkywalker.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				lukeSkywalker.attackDefend = 2;
+			}
+			if (obiWan.health <= 0){
+				obiWan.health = 0;
+			}
 
 			//Change the html text to reflect the changes in health
 			$("#obiHealth").html(obiWan.health);
@@ -117,6 +139,17 @@ $(document).ready(function(){
 			obiWan.health -= darthVader.baseAttackPower;
 			darthVader.health -= obiWan.currentAttackPower;
 			obiWan.currentAttackPower += obiWan.baseAttackPower;
+
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (darthVader.health <= 0){
+				darthVader.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				darthVader.attackDefend = 2;
+			}
+			if (obiWan.health <= 0){
+				obiWan.health = 0;
+			}
 
 			//Change the html text to reflect the changes in health
 			$("#obiHealth").html(obiWan.health);
@@ -137,6 +170,17 @@ $(document).ready(function(){
 			darthMaul.health -= lukeSkywalker.currentAttackPower;
 			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (darthMaul.health <= 0){
+				darthMaul.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				darthMaul.attackDefend = 2;
+			}
+			if (lukeSkywalker.health <= 0){
+				lukeSkywalker.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#lukeHealth").html(lukeSkywalker.health);
 			$("#maulHealth").html(darthMaul.health);
@@ -153,6 +197,17 @@ $(document).ready(function(){
 			obiWan.health -= lukeSkywalker.currentAttackPower;
 			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (obiWan.health <= 0){
+				obiWan.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				obiWan.attackDefend = 2;
+			}
+			if (lukeSkywalker.health <= 0){
+				lukeSkywalker.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#lukeHealth").html(lukeSkywalker.health);
 			$("#obiHealth").html(obiWan.health);
@@ -168,6 +223,17 @@ $(document).ready(function(){
 			lukeSkywalker.health -= darthVader.baseAttackPower;
 			darthVader.health -= lukeSkywalker.currentAttackPower;
 			lukeSkywalker.currentAttackPower += lukeSkywalker.baseAttackPower;
+
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (darthVader.health <= 0){
+				darthVader.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				darthVader.attackDefend = 2;
+			}
+			if (lukeSkywalker.health <= 0){
+				lukeSkywalker.health = 0;
+			}
 
 			//Change the html text to reflect the changes in health
 			$("#lukeHealth").html(lukeSkywalker.health);
@@ -187,6 +253,17 @@ $(document).ready(function(){
 			lukeSkywalker.health -= darthMaul.currentAttackPower;
 			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (lukeSkywalker.health <= 0){
+				lukeSkywalker.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				lukeSkywalker.attackDefend = 2;
+			}
+			if (darthMaul.health <= 0){
+				darthMaul.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#maulHealth").html(darthMaul.health);
 			$("#lukeHealth").html(lukeSkywalker.health);
@@ -203,9 +280,23 @@ $(document).ready(function(){
 			obiWan.health -= darthMaul.currentAttackPower;
 			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (obiWan.health <= 0){
+				obiWan.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				obiWan.attackDefend = 2;
+			}
+			if (darthMaul.health <= 0){
+				darthMaul.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#maulHealth").html(darthMaul.health);
 			$("#obiHealth").html(obiWan.health);
+
+			$("#emptyAttack").html("You attacked " + obiWan.name + " for " + darthMaul.currentAttackPower + " damage.");
+			$("#emptyDefend").html(obiWan.name + " counter attacked for " + obiWan.baseAttackPower + " damage.");
 		}
 		//Darth maul attacking darth vader
 		else if (darthVader.attackDefend == 0){
@@ -215,6 +306,17 @@ $(document).ready(function(){
 			darthMaul.health -= darthVader.baseAttackPower;
 			darthVader.health -= darthMaul.currentAttackPower;
 			darthMaul.currentAttackPower += darthMaul.baseAttackPower;
+
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (darthVader.health <= 0){
+				darthVader.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				darthVader.attackDefend = 2;
+			}
+			if (darthMaul.health <= 0){
+				darthMaul.health = 0;
+			}
 
 			//Change the html text to reflect the changes in health
 			$("#maulHealth").html(darthMaul.health);
@@ -234,13 +336,28 @@ $(document).ready(function(){
 			lukeSkywalker.health -= darthVader.currentAttackPower;
 			darthVader.currentAttackPower += darthVader.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (lukeSkywalker.health <= 0){
+				lukeSkywalker.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				lukeSkywalker.attackDefend = 2;				
+			}
+			if (darthVader.health <= 0){
+				darthVader.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#vaderHealth").html(darthVader.health);
 			$("#lukeHealth").html(lukeSkywalker.health);
 
 			$("#emptyAttack").html("You attacked " + lukeSkywalker.name + " for " + darthVader.currentAttackPower + " damage.");
-			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");			
+			$("#emptyDefend").html(lukeSkywalker.name + " counter attacked for " + lukeSkywalker.baseAttackPower + " damage.");	
+
 		}
+
+
+
 		//Darth vader attacking obi-wan
 		else if (obiWan.attackDefend == 0){
 			//Attackers health can only decrease by the defender's base attack power.
@@ -250,9 +367,24 @@ $(document).ready(function(){
 			obiWan.health -= darthVader.currentAttackPower;
 			darthVader.currentAttackPower += darthVader.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (obiWan.health <= 0){
+				obiWan.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				obiWan.attackDefend = 2;
+			}
+			if (darthVader.health <= 0){
+				darthVader.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#vaderHealth").html(darthVader.health);
 			$("#obiHealth").html(obiWan.health);
+
+
+			$("#emptyAttack").html("You attacked " + obiWan.name + " for " + darthVader.currentAttackPower + " damage.");
+			$("#emptyDefend").html(obiWan.name + " counter attacked for " + obiWan.baseAttackPower + " damage.");	
 		}
 		//Darth vader attacking darth maul
 		else if (darthMaul.attackDefend == 0){
@@ -263,12 +395,23 @@ $(document).ready(function(){
 			darthMaul.health -= darthVader.currentAttackPower;
 			darthVader.currentAttackPower += darthVader.baseAttackPower;
 
+			//If either attacker or defender's health falls below zero, make it zero.
+			if (darthMaul.health <= 0){
+				darthMaul.health = 0;
+
+				//Attack/defend value of 2 signifies a death.
+				darthMaul.attackDefend = 2;
+			}
+			if (darthVader.health <= 0){
+				darthVader.health = 0;
+			}
+
 			//Change the html text to reflect the changes in health
 			$("#vaderHealth").html(darthVader.health);
 			$("#maulHealth").html(darthMaul.health);
 
 			$("#emptyAttack").html("You attacked " + darthMaul.name + " for " + darthVader.currentAttackPower + " damage.");
-			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + darthMaul.baseAttackPower + " damage.");
+			$("#emptyDefend").html(darthMaul.name + " counter attacked for " + dart.baseAttackPower + " damage.");
 		}
 	}
 
