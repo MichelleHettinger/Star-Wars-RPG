@@ -86,7 +86,6 @@ $(document).ready(function(){
 			//remove the div
 			defenderDiv.remove();
 
-
 			console.log("You win");
 			//make the click attack do nothing when clicked
 			charNum = 6;
@@ -170,27 +169,42 @@ $(document).ready(function(){
 	//However, the player can press their selected character to put it back on the roster.
 
 	obi.on("click", function(){
+		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
+		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
+		if (currentDefender.attackDefend == 2 && obiWan.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(obi);
+
+	    	//If maul is the last character
+	    	if (darthMaul.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	maul.removeClass("firstMargin");
+		    	maul.addClass("secondMargin");
+		    }
+		    if (darthVader.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	vader.removeClass("firstMargin");
+		    	vader.addClass("secondMargin");		    	
+		    }
+		    if (lukeSkywalker.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	luke.removeClass("firstMargin");
+		    	luke.addClass("secondMargin");	    	
+		    }		    
+		}
+
 		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
    		if (charNum == 0){
-	    	//Give the enemies highlights
-	    	luke.addClass("highlightEnemies");
-	    	maul.addClass("highlightEnemies");
-	    	vader.addClass("highlightEnemies");
+	    	//Give the enemies highlights and resize their divs
+	    	adjustEnemyAfterSelection(luke,maul,vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	yourFighter.append(obi);
 	    	yourEnemies.append(luke, maul, vader);
 
-	    	//Resize the div to fill out the full width of the very first row div
+	    	//Resize to fit your character div
 	    	obi.removeClass("col-sm-2");
-	    	luke.removeClass("col-sm-2");
-	    	maul.removeClass("col-sm-2");
-	    	vader.removeClass("col-sm-2");
-			//With bootstrap col classes removed, add them back, but change the size.
 	    	obi.addClass("col-sm-12");
-	    	luke.addClass("col-sm-4");
-	    	maul.addClass("col-sm-4");
-	    	vader.addClass("col-sm-4");
 
 	    	//charNum is changed to 1, which is a value that will later signify having selected obi-wan 
 	    	charNum = 1;
@@ -201,9 +215,7 @@ $(document).ready(function(){
 	    //Essentially, it changes the classes back to what they were before the above if statement arranged them.	    
 	    else if (charNum == 1) {
 	    	//Remove the enemy highlights
-	    	luke.removeClass("highlightEnemies");
-	    	maul.removeClass("highlightEnemies");
-	    	vader.removeClass("highlightEnemies");
+	    	adjustEnemyAfterSelection(luke,maul,vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	charSelect.append(obi);
@@ -211,14 +223,7 @@ $(document).ready(function(){
 
 	    	//Resize the div to fill out the full width of the very first row div
 	    	obi.removeClass("col-sm-12");
-	    	luke.removeClass("col-sm-4");
-	    	maul.removeClass("col-sm-4");
-	    	vader.removeClass("col-sm-4");
-	    	//With bootstrap col classes removed, add them back, but change the size.
 	    	obi.addClass("col-sm-2");
-	    	luke.addClass("col-sm-2");
-	    	maul.addClass("col-sm-2");
-	    	vader.addClass("col-sm-2");
 
 			//charNum is changed to 0, which is a value that will later signify having de-selected obi-wan 
 	    	charNum = 0;
@@ -231,17 +236,11 @@ $(document).ready(function(){
 	    
     	//If vader is chosen first and obi second...	    
 	    if (charNum == 4){
-	    	//Put the character in the defender section
-	    	yourDefender.append(obi);
+	    	//Append obi as the defender
+	    	appendDefender(obi);
 
-			//Resize by removing, then adding css classes
-	    	obi.removeClass("col-sm-4");
-	    	obi.addClass("col-sm-12");
+	    	//Based off observations, in this scenario luke needs a margin to make the enemies section centered
 	    	luke.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	obi.removeClass("highlightEnemies");
-	    	obi.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = vaderHealthBar;
@@ -256,17 +255,11 @@ $(document).ready(function(){
 	    }
     	//If maul is chosen first and obi second...	    
 	    else if (charNum == 3){
-	    	//Put the character in the defender section
-	    	yourDefender.append(obi);
+	    	//Append obi as the defender
+	    	appendDefender(obi);
 
-			//Resize by removing, then adding css classes
-	    	obi.removeClass("col-sm-4");
-	    	obi.addClass("col-sm-12");
+	    	//Based off observations, in this scenario luke needs a margin to make the enemies section centered
 	    	luke.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	obi.removeClass("highlightEnemies");
-	    	obi.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = maulHealthBar;
@@ -281,17 +274,11 @@ $(document).ready(function(){
 	    }	    
 	    //Else if luke first and obi second...
 	    else if (charNum == 2){
-	    	//Put the character in the defender section
-	    	yourDefender.append(obi);
+	    	//Append obi as the defender
+	    	appendDefender(obi);
 
-	    	//Resize by removing, then adding css classes
-	    	obi.removeClass("col-sm-4");
-	    	obi.addClass("col-sm-12");
+	    	//Based off observations, in this scenario maul needs a margin to make the enemies section centered
 	    	maul.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	obi.removeClass("highlightEnemies");
-	    	obi.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = lukeHealthBar;
@@ -306,27 +293,42 @@ $(document).ready(function(){
 	    }
     })
     luke.on("click", function(){
+		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
+		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
+		if (currentDefender.attackDefend == 2 && lukeSkywalker.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(luke);
+
+	    	//If maul is the last character
+	    	if (darthMaul.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	maul.removeClass("firstMargin");
+		    	maul.addClass("secondMargin");
+		    }
+		    if (darthVader.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	vader.removeClass("firstMargin");
+		    	vader.addClass("secondMargin");		    	
+		    }
+		    if (obiWan.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	obi.removeClass("firstMargin");
+		    	obi.addClass("secondMargin");	    	
+		    }		    
+		}
+
  		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
     	if (charNum == 0){
-	    	//Give the enemies highlights
-	    	obi.addClass("highlightEnemies");
-	    	maul.addClass("highlightEnemies");
-	    	vader.addClass("highlightEnemies");
+	    	//Give the enemies highlights and resize their divs
+	    	adjustEnemyAfterSelection(obi,maul,vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	yourFighter.append(luke);
 	    	yourEnemies.append(obi, maul, vader);
 
-	    	//Resize the div to fill out the full width of the very first row div
+	    	//Resize to fit your character div
 	    	luke.removeClass("col-sm-2");
-	    	obi.removeClass("col-sm-2");
-	    	maul.removeClass("col-sm-2");
-	    	vader.removeClass("col-sm-2");
-	    	//With bootstrap col classes removed, add them back, but change the size.
 	    	luke.addClass("col-sm-12");
-	    	obi.addClass("col-sm-4");
-	    	maul.addClass("col-sm-4");
-	    	vader.addClass("col-sm-4");
 
 			//charNum is changed to 2, which is a value that will later signify having selected luke skywalker. 
 	    	charNum = 2;
@@ -337,9 +339,7 @@ $(document).ready(function(){
 	    //Essentially, it changes the classes back to what they were before the above if statement arranged them.	    
 	    else if (charNum ==2) {
 	    	//Remove the enemy highlights
-	    	obi.removeClass("highlightEnemies");
-	    	maul.removeClass("highlightEnemies");
-	    	vader.removeClass("highlightEnemies");
+	    	adjustEnemyAfterDeselection(obi, maul, vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	charSelect.append(luke);
@@ -347,14 +347,7 @@ $(document).ready(function(){
 
 	    	//Resize the div to fill out the full width of the very first row div
 	    	luke.removeClass("col-sm-12");
-	    	obi.removeClass("col-sm-4");
-	    	maul.removeClass("col-sm-4");
-	    	vader.removeClass("col-sm-4");
-	    	//With bootstrap col classes removed, add them back, but change the size.
-	    	obi.addClass("col-sm-2");
 	    	luke.addClass("col-sm-2");
-	    	maul.addClass("col-sm-2");
-	    	vader.addClass("col-sm-2");
 
 			//charNum is changed to 0, which is a value that will later signify having selected luke skywalker.
 	    	charNum = 0;
@@ -367,17 +360,11 @@ $(document).ready(function(){
 
     	//If vader is chosen first and luke second...	    
 	    if (charNum == 4){
-	    	//Put the character in the defender section
-	    	yourDefender.append(luke);
+	    	//Append luke as the defender
+	    	appendDefender(luke);
 
-	    	//Resize by removing, then adding css classes
-	    	luke.removeClass("col-sm-4");
-	    	luke.addClass("col-sm-12");
+	    	//Based off observations, in this scenario obi needs a margin to make the enemies section centered
 	    	obi.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	luke.removeClass("highlightEnemies");
-	    	luke.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = vaderHealthBar;
@@ -392,17 +379,11 @@ $(document).ready(function(){
 	    }
     	//If maul is chosen first and luke second...	    
 	    else if (charNum == 3){
-	    	//Put the character in the defender section
-	    	yourDefender.append(luke);
+	    	//Append luke as the defender
+	    	appendDefender(luke);
 
-	    	//Resize by removing, then adding css classes
-	    	luke.removeClass("col-sm-4");
-	    	luke.addClass("col-sm-12");
+	    	//Based off observations, in this scenario obi needs a margin to make the enemies section centered	    	
 	    	obi.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	luke.removeClass("highlightEnemies");
-	    	luke.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = maulHealthBar;
@@ -417,17 +398,11 @@ $(document).ready(function(){
 	    }	    
 	    //Else if obi was chosen second and luke second...
 	    else if (charNum == 1){
-	    	//Put the character in the defender section
-	    	yourDefender.append(luke);
+	    	//Append luke as the defender
+	    	appendDefender(luke);
 
-	    	//Resize by removing, then adding css classes
-	    	luke.removeClass("col-sm-4");
-	    	luke.addClass("col-sm-12");
+	    	//Based off observations, in this scenario maul needs a margin to make the enemies section centered	 
 	    	maul.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	luke.removeClass("highlightEnemies");
-	    	luke.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = obiHealthBar;
@@ -442,12 +417,34 @@ $(document).ready(function(){
 	    }	       
     })
     maul.on("click", function(){
+		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
+		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
+		if (currentDefender.attackDefend == 2 && darthMaul.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(maul);
+
+	    	//If maul is the last character
+	    	if (lukeSkywalker.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	luke.removeClass("firstMargin");
+		    	luke.addClass("secondMargin");
+		    }
+		    if (darthVader.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	vader.removeClass("firstMargin");
+		    	vader.addClass("secondMargin");		    	
+		    }
+		    if (obiWan.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	obi.removeClass("firstMargin");
+		    	obi.addClass("secondMargin");	    	
+		    }		    
+		}
+
  		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
     	if (charNum == 0){
-	    	//Give the enemies highlights
-	    	obi.addClass("highlightEnemies");
-	    	luke.addClass("highlightEnemies");
-	    	vader.addClass("highlightEnemies");
+	    	//Give the enemies highlights and resize their divs
+	    	adjustEnemyAfterSelection(obi,luke,vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	yourFighter.append(maul);
@@ -455,15 +452,7 @@ $(document).ready(function(){
 
 	    	//Resize the div to fill out the full width of the very first row div
 	    	maul.removeClass("col-sm-2");
-	    	obi.removeClass("col-sm-2");
-	    	luke.removeClass("col-sm-2");
-	    	vader.removeClass("col-sm-2");
-
-	    	//With bootstrap col classes removed, add them back, but change the size.
 	    	maul.addClass("col-sm-12");
-	    	obi.addClass("col-sm-4");
-	    	luke.addClass("col-sm-4");
-	    	vader.addClass("col-sm-4");
 
 			//charNum is changed to 3, which is a value that will later signify having selected darth maul.
 	    	charNum = 3;
@@ -474,9 +463,7 @@ $(document).ready(function(){
 	    //Essentially, it changes the classes back to what they were before the above if statement arranged them.
 		else if (charNum == 3) {
 	    	//Remove the enemy highlights
-	    	obi.removeClass("highlightEnemies");
-	    	luke.removeClass("highlightEnemies");
-	    	vader.removeClass("highlightEnemies");
+	    	adjustEnemyAfterDeselection(obi, luke, vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	charSelect.append(maul);
@@ -484,14 +471,7 @@ $(document).ready(function(){
 
 	    	//Resize the div to fill out the full width of the very first row div
 	    	maul.removeClass("col-sm-12");
-	    	obi.removeClass("col-sm-4");
-	    	luke.removeClass("col-sm-4");
-	    	vader.removeClass("col-sm-4");
-	    	//With bootstrap col classes removed, add them back, but change the size.
-	    	obi.addClass("col-sm-2");
-	    	luke.addClass("col-sm-2");
 	    	maul.addClass("col-sm-2");
-	    	vader.addClass("col-sm-2");
 
 	    	//charNum is changed to 0, which is a value that will later signify having de-selected darth maul
 	    	charNum = 0;
@@ -504,17 +484,11 @@ $(document).ready(function(){
 
     	//If obi is chosen first and maul second.	    
 	    if (charNum == 1){
-	    	//Put the character in the defender section
-	    	yourDefender.append(maul);
+	    	//Append maul as the defender
+	    	appendDefender(maul);
 
-			//Resize by removing, then adding css classes
-	    	maul.removeClass("col-sm-4");
-	    	maul.addClass("col-sm-12");
+	    	//Based off observations, in this scenario luke needs a margin to make the enemies section centered	 
 	    	luke.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	maul.removeClass("highlightEnemies");
-	    	maul.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = obiHealthBar;
@@ -529,19 +503,11 @@ $(document).ready(function(){
 	    }
 	    //If vader is chosen first and maul second
 	    else if (charNum == 4){
-	    	//Put the character in the defender section
-	    	yourDefender.append(maul);
+	    	//Append maul as the defender
+	    	appendDefender(maul);
 
-			//Resize by removing, then adding css classes
-	    	maul.removeClass("col-sm-4");
-	    	maul.addClass("col-sm-12");
-
-	    	//Resize the enemies div
+	    	//Based off observations, in this scenario obi needs a margin to make the enemies section centered	 
 	    	obi.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	maul.removeClass("highlightEnemies");
-	    	maul.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = vaderHealthBar;
@@ -556,19 +522,11 @@ $(document).ready(function(){
 	    }
 	    //If luke is chosen first and maul second
 	    else if (charNum == 2){
-	    	//Put the character in the defender section
-	    	yourDefender.append(maul);
+	    	//Append maul as the defender
+	    	appendDefender(maul);
 
-			//Resize by removing, then adding css classes
-	    	maul.removeClass("col-sm-4");
-	    	maul.addClass("col-sm-12");
-
-	    	//Resize the enemies div
+	    	//Based off observations, in this scenario obi needs a margin to make the enemies section centered	 
 	    	obi.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	maul.removeClass("highlightEnemies");
-	    	maul.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = lukeHealthBar;
@@ -583,12 +541,33 @@ $(document).ready(function(){
 	    }	 	    	    	
     })
     vader.on("click", function(){
+		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
+		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
+		if (currentDefender.attackDefend == 2 && darthVader.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(vader);
+
+	    	//If maul is the last character
+	    	if (lukeSkywalker.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	luke.removeClass("firstMargin");
+		    	luke.addClass("secondMargin");
+		    }
+		    if (darthMaul.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	maul.removeClass("firstMargin");
+		    	maul.addClass("secondMargin");		    	
+		    }
+		    if (obiWan.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	obi.removeClass("firstMargin");
+		    	obi.addClass("secondMargin");	    	
+		    }		    
+		}    	
 		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
     	if (charNum == 0){
-	    	//Give the enemies highlights
-	    	obi.addClass("highlightEnemies");
-	    	luke.addClass("highlightEnemies");
-	    	maul.addClass("highlightEnemies");
+	    	//Give the enemies highlights and resize their divs
+	    	adjustEnemyAfterSelection(obi,luke,maul);
 
 	    	//Shuffle the character into the fighter and enemy divs
 	    	yourFighter.append(vader);
@@ -596,15 +575,7 @@ $(document).ready(function(){
 
 	    	//Resize the div to fill out the full width of the very first row div
 	    	vader.removeClass("col-sm-2");
-	    	obi.removeClass("col-sm-2");
-	    	luke.removeClass("col-sm-2");
-	    	maul.removeClass("col-sm-2");
-
-	    	//With bootstrap col classes removed, add them back, but change the size.
 	    	vader.addClass("col-sm-12");
-	    	obi.addClass("col-sm-4");
-	    	luke.addClass("col-sm-4");
-	    	maul.addClass("col-sm-4");
 
 			//charNum is changed to 4, which is a value that will later signify having selected darth vader
 	    	charNum = 4;
@@ -615,9 +586,7 @@ $(document).ready(function(){
 	    //Essentially, it changes the classes back to what they were before the above if statement arranged them.
 	    else if (charNum == 4) {
 	    	//Remove the enemy highlights
-	    	obi.removeClass("highlightEnemies");
-	    	luke.removeClass("highlightEnemies");
-	    	maul.removeClass("highlightEnemies");
+	    	adjustEnemyAfterDeselection(obi, luke, maul);
 
 	    	//Shuffle the character into the fighter and enemy divs
 	    	charSelect.append(vader);
@@ -625,13 +594,6 @@ $(document).ready(function(){
 
 	    	//Resize the div to fill out the full width of the very first row div
 	    	vader.removeClass("col-sm-12");
-	    	obi.removeClass("col-sm-4");
-	    	luke.removeClass("col-sm-4");
-	    	maul.removeClass("col-sm-4");
-	    	//With bootstrap col classes removed, add them back, but change the size.
-	    	obi.addClass("col-sm-2");
-	    	luke.addClass("col-sm-2");
-	    	maul.addClass("col-sm-2");
 	    	vader.addClass("col-sm-2");
 
 			//charNum is changed to 0, which is a value that will later signify having de-selected darth vader
@@ -645,17 +607,11 @@ $(document).ready(function(){
 	    
     	//If obi is chosen first and vader second...	    
 	    if (charNum == 1){
-	    	//Put the character in the defender section
-	    	yourDefender.append(vader);
+	    	//Append vader as the defender
+	    	appendDefender(vader);
 
-	    	//Resize by removing, then adding css classes
-	    	vader.removeClass("col-sm-4");
-	    	vader.addClass("col-sm-12");
+	    	//Based off observations, in this scenario luke needs a margin to make the enemies section centered	
 	    	luke.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	vader.removeClass("highlightEnemies");
-	    	vader.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = obiHealthBar;
@@ -670,17 +626,12 @@ $(document).ready(function(){
 	    }
 	    //If luke is chosen first and vader second...
 	    else if (charNum == 2){
-	    	//Put the character in the defender section
-	    	yourDefender.append(vader);
+	    	//Append vader as the defender
+	    	appendDefender(vader);
 
-	    	//Resize by removing, then adding css classes
-	    	vader.removeClass("col-sm-4");
-	    	vader.addClass("col-sm-12");
+	    	//Based off observations, in this scenario obi needs a margin to make the enemies section centered	
 	    	obi.addClass("firstMargin");
 
-	    	//Change color of defender
-	    	vader.removeClass("highlightEnemies");
-	    	vader.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = lukeHealthBar;
@@ -695,17 +646,11 @@ $(document).ready(function(){
 	    }	    
 	    //If maul is chosen first and vader second...
 	    else if (charNum == 3){
-	    	//Put the character in the defender section
-	    	yourDefender.append(vader);
+	    	//Append vader as the defender
+	    	appendDefender(vader);
 
-	    	//Resize by removing, then adding css classes
-	    	vader.removeClass("col-sm-4");
-	    	vader.addClass("col-sm-12");
+	    	//Based off observations, in this scenario obi needs a margin to make the enemies section centered	
 	    	obi.addClass("firstMargin");
-
-	    	//Change color of defender
-	    	vader.removeClass("highlightEnemies");
-	    	vader.addClass("highlightDefender");
 
 	    	//Current attackers health bar to the <p></p> associated with the characters health.
 	    	attackerHealthBar = maulHealthBar;
@@ -719,6 +664,58 @@ $(document).ready(function(){
 	    	lockChars(darthMaul, darthVader);    	
 	    }	        
     })
+
+
+
+	function adjustEnemyAfterDeselection (d1, d2, d3){
+		//Remove highlights of the remaining 3 enemies
+    	d1.removeClass("highlightEnemies");
+    	d2.removeClass("highlightEnemies");
+    	d3.removeClass("highlightEnemies");
+
+    	//Resize by removing bootstrap classes, then adding new ones
+    	d1.removeClass("col-sm-4");
+    	d2.removeClass("col-sm-4");
+    	d3.removeClass("col-sm-4");
+    	
+    	d1.addClass("col-sm-2");
+    	d2.addClass("col-sm-2");
+    	d3.addClass("col-sm-2");   	
+	}
+	function adjustEnemyAfterSelection (d1, d2, d3){
+		//Add highlights of the remaining 3 enemies
+    	d1.addClass("highlightEnemies");
+    	d2.addClass("highlightEnemies");
+    	d3.addClass("highlightEnemies");
+
+    	//Resize by removing bootstrap classes then adding new ones
+    	d1.removeClass("col-sm-2");
+    	d2.removeClass("col-sm-2");
+    	d3.removeClass("col-sm-2");
+
+    	d1.addClass("col-sm-4");
+    	d2.addClass("col-sm-4");
+    	d3.addClass("col-sm-4");
+	}
+
+
+	function appendDefender (defender){
+    	//Put the character in the defender section
+    	yourDefender.append(defender);
+
+    	//Resize by removing, then adding css classes
+    	defender.removeClass("col-sm-4");
+    	defender.addClass("col-sm-12");
+
+    	//Change color of defender
+    	defender.removeClass("highlightEnemies");
+    	defender.addClass("highlightDefender");
+
+    	//Margins that are added to adjust for the enemies section should be removed
+    	defender.removeClass("firstMargin");
+	}
+
+
 
 
 
