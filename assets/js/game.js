@@ -169,30 +169,6 @@ $(document).ready(function(){
 	//However, the player can press their selected character to put it back on the roster.
 
 	obi.on("click", function(){
-		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
-		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
-		if (currentDefender.attackDefend == 2 && obiWan.attackDefend == -1){
-	    	//Put the character in the defender section
-	    	appendDefender(obi);
-
-	    	//If maul is the last character
-	    	if (darthMaul.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	maul.removeClass("firstMargin");
-		    	maul.addClass("secondMargin");
-		    }
-		    if (darthVader.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	vader.removeClass("firstMargin");
-		    	vader.addClass("secondMargin");		    	
-		    }
-		    if (lukeSkywalker.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	luke.removeClass("firstMargin");
-		    	luke.addClass("secondMargin");	    	
-		    }		    
-		}
-
 		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
    		if (charNum == 0){
 	    	//Give the enemies highlights and resize their divs
@@ -291,13 +267,12 @@ $(document).ready(function(){
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(lukeSkywalker, obiWan);    	
 	    }
-    })
-    luke.on("click", function(){
+
 		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
 		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
-		if (currentDefender.attackDefend == 2 && lukeSkywalker.attackDefend == -1){
+		if (currentDefender.attackDefend == 2 && obiWan.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(luke);
+	    	appendDefender(obi);
 
 	    	//If maul is the last character
 	    	if (darthMaul.attackDefend == -1){
@@ -310,13 +285,18 @@ $(document).ready(function(){
 		    	vader.removeClass("firstMargin");
 		    	vader.addClass("secondMargin");		    	
 		    }
-		    if (obiWan.attackDefend == -1){
+		    if (lukeSkywalker.attackDefend == -1){
 		    	//Based on observations the div of  the last enemy needs resizing
-		    	obi.removeClass("firstMargin");
-		    	obi.addClass("secondMargin");	    	
+		    	luke.removeClass("firstMargin");
+		    	luke.addClass("secondMargin");	    	
 		    }		    
 		}
-
+		else if (currentDefender.attackDefend == 3 && obiWan.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(obi);			
+		}
+    })
+    luke.on("click", function(){
  		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
     	if (charNum == 0){
 	    	//Give the enemies highlights and resize their divs
@@ -414,20 +394,19 @@ $(document).ready(function(){
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(obiWan, lukeSkywalker);
-	    }	       
-    })
-    maul.on("click", function(){
+	    }	
+
 		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
 		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
-		if (currentDefender.attackDefend == 2 && darthMaul.attackDefend == -1){
+		if (currentDefender.attackDefend == 2 && lukeSkywalker.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(maul);
+	    	appendDefender(luke);
 
 	    	//If maul is the last character
-	    	if (lukeSkywalker.attackDefend == -1){
+	    	if (darthMaul.attackDefend == -1){
 		    	//Based on observations the div of  the last enemy needs resizing
-		    	luke.removeClass("firstMargin");
-		    	luke.addClass("secondMargin");
+		    	maul.removeClass("firstMargin");
+		    	maul.addClass("secondMargin");
 		    }
 		    if (darthVader.attackDefend == -1){
 		    	//Based on observations the div of  the last enemy needs resizing
@@ -440,7 +419,12 @@ $(document).ready(function(){
 		    	obi.addClass("secondMargin");	    	
 		    }		    
 		}
-
+		else if (currentDefender.attackDefend == 3 && lukeSkywalker.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(luke);			
+		}
+    })
+    maul.on("click", function(){
  		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
     	if (charNum == 0){
 	    	//Give the enemies highlights and resize their divs
@@ -538,14 +522,13 @@ $(document).ready(function(){
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(lukeSkywalker, darthMaul);	
-	    }	 	    	    	
-    })
-    vader.on("click", function(){
+	    }
+
 		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
 		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
-		if (currentDefender.attackDefend == 2 && darthVader.attackDefend == -1){
+		if (currentDefender.attackDefend == 2 && darthMaul.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(vader);
+	    	appendDefender(maul);
 
 	    	//If maul is the last character
 	    	if (lukeSkywalker.attackDefend == -1){
@@ -553,17 +536,23 @@ $(document).ready(function(){
 		    	luke.removeClass("firstMargin");
 		    	luke.addClass("secondMargin");
 		    }
-		    if (darthMaul.attackDefend == -1){
+		    if (darthVader.attackDefend == -1){
 		    	//Based on observations the div of  the last enemy needs resizing
-		    	maul.removeClass("firstMargin");
-		    	maul.addClass("secondMargin");		    	
+		    	vader.removeClass("firstMargin");
+		    	vader.addClass("secondMargin");		    	
 		    }
 		    if (obiWan.attackDefend == -1){
 		    	//Based on observations the div of  the last enemy needs resizing
 		    	obi.removeClass("firstMargin");
 		    	obi.addClass("secondMargin");	    	
 		    }		    
-		}    	
+		}
+		else if (currentDefender.attackDefend == 3 && darthMaul.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(maul);			
+		}
+    })
+    vader.on("click", function(){
 		//Since charNum loads up as 0, this means that when the user clicks on obi, the following if statement will execute.
     	if (charNum == 0){
 	    	//Give the enemies highlights and resize their divs
@@ -662,7 +651,36 @@ $(document).ready(function(){
 
 	    	//Make it so the attacker/defender is locked in
 	    	lockChars(darthMaul, darthVader);    	
-	    }	        
+	    }	   
+
+
+		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
+		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
+		if (currentDefender.attackDefend == 2 && darthVader.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(vader);
+
+	    	//If maul is the last character
+	    	if (lukeSkywalker.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	luke.removeClass("firstMargin");
+		    	luke.addClass("secondMargin");
+		    }
+		    if (darthMaul.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	maul.removeClass("firstMargin");
+		    	maul.addClass("secondMargin");		    	
+		    }
+		    if (obiWan.attackDefend == -1){
+		    	//Based on observations the div of  the last enemy needs resizing
+		    	obi.removeClass("firstMargin");
+		    	obi.addClass("secondMargin");	    	
+		    }		    
+		}    	
+		else if (currentDefender.attackDefend == 3 && darthVader.attackDefend == -1){
+	    	//Put the character in the defender section
+	    	appendDefender(vader);			
+		}
     })
 
 
