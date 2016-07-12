@@ -19,6 +19,7 @@ $(document).ready(function(){
 	var fightSection = $("#fightSection");
 
 	var charNum = 0;
+	var playerWin = 0;
 
 	var obiWan = {
 		name: "Obi-Wan",
@@ -72,17 +73,11 @@ $(document).ready(function(){
 	var defenderDiv;
 
 
-
 	attack.on("click", function(){
 		if (charNum > 4 && charNum != 6) {
 			clickBattle(currentAttacker, attackerHealthBar, currentDefender, defenderHealthBar);
 		}
 	})
-
-
-
-
-
 
 	//This function executes when attack button is clicked on AND when charNum > 4 (indicating 2 fighters are locked into battle).
 	function clickBattle(attacker, attackerHB, defender, defenderHB){
@@ -132,6 +127,13 @@ $(document).ready(function(){
 
 			//make the click attack do nothing when clicked
 			charNum = 6;
+			//Need to count playerwin so the game eventually comes to an end
+			playerWin += 1;
+
+				//If the character defeats all others
+				if (playerWin == 3) {
+					alert("You win the game!" + "\n" + "(No more enemies to select)" );
+				}
 		}
 		if (attacker.health == 0){
 			//Alert and remove div
@@ -140,17 +142,12 @@ $(document).ready(function(){
 
 
 			alert("You lost to " + defender.name + " !" + "\n" + "Start over!");
-
-
 			attackerDiv.remove();
 
 			//you lose
 			charNum = 6;
 		}
 	}
-
-
-
 
 
 	//Select the character and it gets pulled to the left. All other characters pulled to the right.
@@ -826,15 +823,6 @@ $(document).ready(function(){
     	defenderDiv = div;
     	defenderHealthBar = hb;
 	}
-
-
-
-
-
-
-
-
-
 
 })
 
