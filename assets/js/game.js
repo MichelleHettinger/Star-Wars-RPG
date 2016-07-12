@@ -133,6 +133,7 @@ $(document).ready(function(){
 				//If the character defeats all others
 				if (playerWin == 3) {
 					alert("You win the game!" + "\n" + "(No more enemies to select)" );
+					window.location.reload();
 				}
 		}
 		if (attacker.health == 0){
