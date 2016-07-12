@@ -81,24 +81,7 @@ $(document).ready(function(){
 
 
 
-	function checkHealth(attacker, defender){
-		if (defender.health == 0){
-			//remove the div
-			defenderDiv.remove();
 
-			console.log("You win");
-			//make the click attack do nothing when clicked
-			charNum = 6;
-		}
-		if (attack.health == 0){
-			//remove the div
-			attackerDiv.remove();
-
-			console.log("You lose");
-			//you lose
-			charNum = 6;
-		}
-	}
 
 
 	//This function executes when attack button is clicked on AND when charNum > 4 (indicating 2 fighters are locked into battle).
@@ -128,39 +111,45 @@ $(document).ready(function(){
 		attackerHB.html(attacker.health);
 		defenderHB.html(defender.health);
 
+
 		$("#emptyAttack").html("You attacked " + defender.name + " for " + attacker.currentAttackPower + " damage.");
 		$("#emptyDefend").html(defender.name + " counter attacked for " + defender.baseAttackPower + " damage.");
+	
+
 
 		checkHealth(attacker, defender);
 		
 	}
+	//This function checks the health and determins of a character has died
+	function checkHealth(attacker, defender){
+		if (defender.health == 0){
+			//Alert and remove div
+			$("#emptyAttack").html("You attacked " + defender.name + " for " + attacker.currentAttackPower + " damage and killed him!");
+			$("#emptyDefend").html(defender.name + " counter attacked for " + defender.baseAttackPower + " damage just before he died.");
+
+			alert("You defeated " + defender.name + " !" + "\n" + "Select a new enemy to fight.");
+			defenderDiv.remove();
+
+			//make the click attack do nothing when clicked
+			charNum = 6;
+		}
+		if (attacker.health == 0){
+			//Alert and remove div
+			$("#emptyAttack").html("You attacked " + defender.name + " for " + attacker.currentAttackPower + " damage");
+			$("#emptyDefend").html(defender.name + " counter attacked for " + defender.baseAttackPower + " damage and killed you.");
 
 
-	//This function execute when the user selects their character and then a second character. It also makes it so no character's divs can be clicked on.
-	function lockChars(attacker, defender){
-		//Fill in the empty objects with the values for the attacker
-		currentAttacker.name = attacker.name;
-		currentAttacker.health = attacker.health;
-		currentAttacker.baseAttackPower = attacker.baseAttackPower;
-		currentAttacker.currentAttackPower = attacker.currentAttackPower;
-		currentAttacker.attackDefend = attacker.attackDefend;
-		//Do the same for the defender
-		currentDefender.name = defender.name;
-		currentDefender.health = defender.health;
-		currentDefender.baseAttackPower = defender.baseAttackPower;
-		currentDefender.currentAttackPower = defender.currentAttackPower;
-		currentDefender.attackDefend = defender.attackDefend;
+			alert("You lost to " + defender.name + " !" + "\n" + "Start over!");
 
-		//With charNum set to 5, the character divs cannot be clicked on
-		charNum = 5;
 
-		//Signify that the defender is in the defensive state
-		//Before this lockChars function was run, the attackers attackDefend was set to 1, which was then brought into this function and assigned currentAttacker.attackDefend
-		currentDefender.attackDefend = 0;
+			attackerDiv.remove();
 
-		console.log(currentAttacker.name + " vs. " + currentDefender.name);
-		console.log("Attacker status: " + currentAttacker.attackDefend + "\n" + "Defender status: " + currentDefender.attackDefend + "\n" + "charNum: " + charNum);
+			//you lose
+			charNum = 6;
+		}
 	}
+
+
 
 
 
@@ -269,31 +258,39 @@ $(document).ready(function(){
 	    }
 
 		//When the first round finishes, the defenders "attack status" is set to two, signifying he has died and a new character can be selected to fight against.
-		//And we only want obi to be selectable if he IS NOT the attacker and if he has not died.
+		//And we only want obi to be selectable if he has not battled before
 		if (currentDefender.attackDefend == 2 && obiWan.attackDefend == -1){
 	    	//Put the character in the defender section
 	    	appendDefender(obi);
 
-	    	//If maul is the last character
-	    	if (darthMaul.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	maul.removeClass("firstMargin");
-		    	maul.addClass("secondMargin");
-		    }
-		    if (darthVader.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	vader.removeClass("firstMargin");
-		    	vader.addClass("secondMargin");		    	
-		    }
-		    if (lukeSkywalker.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	luke.removeClass("firstMargin");
-		    	luke.addClass("secondMargin");	    	
-		    }		    
+	    	//Set obi into defense position
+	    	obiWan.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(obiWan, obi, obiHealthBar);
+
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;
+
 		}
 		else if (currentDefender.attackDefend == 3 && obiWan.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(obi);			
+	    	appendDefender(obi);
+
+	    	//Set obi into defense position
+	    	obiWan.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(obiWan, obi, obiHealthBar);
+
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;
 		}
     })
     luke.on("click", function(){
@@ -402,26 +399,33 @@ $(document).ready(function(){
 	    	//Put the character in the defender section
 	    	appendDefender(luke);
 
-	    	//If maul is the last character
-	    	if (darthMaul.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	maul.removeClass("firstMargin");
-		    	maul.addClass("secondMargin");
-		    }
-		    if (darthVader.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	vader.removeClass("firstMargin");
-		    	vader.addClass("secondMargin");		    	
-		    }
-		    if (obiWan.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	obi.removeClass("firstMargin");
-		    	obi.addClass("secondMargin");	    	
-		    }		    
+	    	//Set obi into defense position
+	    	lukeSkywalker.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(lukeSkywalker, luke, lukeHealthBar);
+
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;				    
 		}
 		else if (currentDefender.attackDefend == 3 && lukeSkywalker.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(luke);			
+	    	appendDefender(luke);
+
+	    	//Set obi into defense position
+	    	lukeSkywalker.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(lukeSkywalker, luke, lukeHealthBar);
+
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;			
 		}
     })
     maul.on("click", function(){
@@ -530,26 +534,33 @@ $(document).ready(function(){
 	    	//Put the character in the defender section
 	    	appendDefender(maul);
 
-	    	//If maul is the last character
-	    	if (lukeSkywalker.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	luke.removeClass("firstMargin");
-		    	luke.addClass("secondMargin");
-		    }
-		    if (darthVader.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	vader.removeClass("firstMargin");
-		    	vader.addClass("secondMargin");		    	
-		    }
-		    if (obiWan.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	obi.removeClass("firstMargin");
-		    	obi.addClass("secondMargin");	    	
-		    }		    
+	    	//Set obi into defense position
+	    	darthMaul.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();	
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(darthMaul, maul, maulHealthBar);
+	    		
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;
 		}
 		else if (currentDefender.attackDefend == 3 && darthMaul.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(maul);			
+	    	appendDefender(maul);
+
+	    	//Set obi into defense position
+	    	darthMaul.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();	
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(darthMaul, maul, maulHealthBar);
+	    		
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;			
 		}
     })
     vader.on("click", function(){
@@ -660,46 +671,38 @@ $(document).ready(function(){
 	    	//Put the character in the defender section
 	    	appendDefender(vader);
 
-	    	//If maul is the last character
-	    	if (lukeSkywalker.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	luke.removeClass("firstMargin");
-		    	luke.addClass("secondMargin");
-		    }
-		    if (darthMaul.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	maul.removeClass("firstMargin");
-		    	maul.addClass("secondMargin");		    	
-		    }
-		    if (obiWan.attackDefend == -1){
-		    	//Based on observations the div of  the last enemy needs resizing
-		    	obi.removeClass("firstMargin");
-		    	obi.addClass("secondMargin");	    	
-		    }		    
+	    	//Set obi into defense position
+	    	darthVader.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(darthVader, vader, vaderHealthBar);
+	    		
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;
 		}    	
 		else if (currentDefender.attackDefend == 3 && darthVader.attackDefend == -1){
 	    	//Put the character in the defender section
-	    	appendDefender(vader);			
+	    	appendDefender(vader);
+
+	    	//Set obi into defense position
+	    	darthVader.attackDefend = 0;
+
+	    	//Fix the enemy divs to be centered
+	    	adjustEnemyRound2();
+
+	    	//I need to assign these placeholder variables with the ones associated to the defender in order write to html
+	    	placeholdersR2R3(darthVader, vader, vaderHealthBar);
+	    		
+	    	//charNum of 7 allows the click button to become usable again
+	    	charNum = 7;			
 		}
     })
 
 
-
-	function adjustEnemyAfterDeselection (d1, d2, d3){
-		//Remove highlights of the remaining 3 enemies
-    	d1.removeClass("highlightEnemies");
-    	d2.removeClass("highlightEnemies");
-    	d3.removeClass("highlightEnemies");
-
-    	//Resize by removing bootstrap classes, then adding new ones
-    	d1.removeClass("col-sm-4");
-    	d2.removeClass("col-sm-4");
-    	d3.removeClass("col-sm-4");
-    	
-    	d1.addClass("col-sm-2");
-    	d2.addClass("col-sm-2");
-    	d3.addClass("col-sm-2");   	
-	}
+	//These functions adjust the divs as they change when being moved around
 	function adjustEnemyAfterSelection (d1, d2, d3){
 		//Add highlights of the remaining 3 enemies
     	d1.addClass("highlightEnemies");
@@ -715,8 +718,49 @@ $(document).ready(function(){
     	d2.addClass("col-sm-4");
     	d3.addClass("col-sm-4");
 	}
+	function adjustEnemyAfterDeselection (d1, d2, d3){
+		//Remove highlights of the remaining 3 enemies
+    	d1.removeClass("highlightEnemies");
+    	d2.removeClass("highlightEnemies");
+    	d3.removeClass("highlightEnemies");
 
+    	//Resize by removing bootstrap classes, then adding new ones
+    	d1.removeClass("col-sm-4");
+    	d2.removeClass("col-sm-4");
+    	d3.removeClass("col-sm-4");
+    	
+    	d1.addClass("col-sm-2");
+    	d2.addClass("col-sm-2");
+    	d3.addClass("col-sm-2");   	
+	}
 
+	//This function execute when the user selects their character and then a second character. It also makes it so no character's divs can be clicked on.
+	function lockChars(attacker, defender){
+		//Fill in the empty objects with the values for the attacker
+		currentAttacker.name = attacker.name;
+		currentAttacker.health = attacker.health;
+		currentAttacker.baseAttackPower = attacker.baseAttackPower;
+		currentAttacker.currentAttackPower = attacker.currentAttackPower;
+		currentAttacker.attackDefend = attacker.attackDefend;
+		//Do the same for the defender
+		currentDefender.name = defender.name;
+		currentDefender.health = defender.health;
+		currentDefender.baseAttackPower = defender.baseAttackPower;
+		currentDefender.currentAttackPower = defender.currentAttackPower;
+		currentDefender.attackDefend = defender.attackDefend;
+
+		//With charNum set to 5, the character divs cannot be clicked on
+		charNum = 5;
+
+		//Signify that the defender is in the defensive state
+		//Before this lockChars function was run, the attackers attackDefend was set to 1, which was then brought into this function and assigned currentAttacker.attackDefend
+		currentDefender.attackDefend = 0;
+
+		console.log(currentAttacker.name + " vs. " + currentDefender.name);
+		console.log("Attacker status: " + currentAttacker.attackDefend + "\n" + "Defender status: " + currentDefender.attackDefend + "\n" + "charNum: " + charNum);
+	}
+
+	//Appends the chosen enemy into the defender section and changes some CSS classes to center everything
 	function appendDefender (defender){
     	//Put the character in the defender section
     	yourDefender.append(defender);
@@ -732,6 +776,59 @@ $(document).ready(function(){
     	//Margins that are added to adjust for the enemies section should be removed
     	defender.removeClass("firstMargin");
 	}
+
+
+	//Changes some CSS classes to center everything
+	function adjustEnemyRound2(){
+    	//If one of these characters are remaining
+    	if (darthMaul.attackDefend == -1){
+	    	//Based on observations the div of  the last enemy needs resizing
+	    	maul.removeClass("firstMargin");
+	    	maul.addClass("secondMargin");
+	    }
+	    if (darthVader.attackDefend == -1){
+	    	//Based on observations the div of  the last enemy needs resizing
+	    	vader.removeClass("firstMargin");
+	    	vader.addClass("secondMargin");		    	
+	    }
+	    if (lukeSkywalker.attackDefend == -1){
+	    	//Based on observations the div of  the last enemy needs resizing
+	    	luke.removeClass("firstMargin");
+	    	luke.addClass("secondMargin");	    	
+	    }
+	    if (obiWan.attackDefend == -1){
+	    	//Based on observations the div of  the last enemy needs resizing
+	    	obi.removeClass("firstMargin");
+	    	obi.addClass("secondMargin");	 	    	
+	    }
+
+	    //If these characters were selected as the second defender
+	    if (darthMaul.attackDefend == 0){
+	    	maul.removeClass("firstMargin");
+	    	maul.removeClass("secondMargin");
+	    }
+	    else if (darthVader.attackDefend == 0){
+	    	vader.removeClass("firstMargin");
+	    	vader.removeClass("secondMargin");
+	    }	    
+	    else if (lukeSkywalker.attackDefend == 0){
+	    	luke.removeClass("firstMargin");
+	    	luke.removeClass("secondMargin");
+	    }
+	    else if (obiWan.attackDefend == 0){
+	    	obi.removeClass("firstMargin");
+	    	obi.removeClass("secondMargin");
+	    }	    		    		
+	}
+	//Brings in the defender object, the defenders movable div and the chosen defenders health
+	function placeholdersR2R3(object, div, hb){
+    	currentDefender = object;
+    	defenderDiv = div;
+    	defenderHealthBar = hb;
+	}
+
+
+
 
 
 
