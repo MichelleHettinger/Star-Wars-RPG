@@ -178,7 +178,7 @@ $(document).ready(function(){
 	    //Essentially, it changes the classes back to what they were before the above if statement arranged them.	    
 	    else if (charNum == 1) {
 	    	//Remove the enemy highlights
-	    	adjustEnemyAfterSelection(luke,maul,vader);
+	    	adjustEnemyAfterDeselection(luke,maul,vader);
 
 	    	//Shuffle the character divs around into fighter and enemy divs
 	    	charSelect.append(obi);
